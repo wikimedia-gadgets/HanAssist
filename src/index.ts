@@ -3,7 +3,6 @@
  * ---------
  * Utilities to ease Chinese variant handling in user scripts and gadgets.
  * @author [[zh:User:Diskdance]]
- * @author [[zh:User:Роу Уилсон Фредериск Холм]]
  * @author [[zh:User:SunAfterRain]]
  * @license Unlicense
  */

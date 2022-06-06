@@ -4,10 +4,10 @@ HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚�
 本程序用以取代先前的``wgULS()``和``wgUVS()``小工具。
 
 ```javascript
-HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) 
+HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
 // => 界面语言为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) 
+HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
 // => 页面变体为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 ```
 
@@ -37,25 +37,25 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 
 ```javascript
 // 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' )
-HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) 
+HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
 
 // 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' )
-HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } ) 
+HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } )
 
 // 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' )
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) 
+HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
 
-// 配合占位符号使用 
-mw.format( 
-    HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ), 
-    '123456', 
-    'Apple' 
+// 配合占位符号使用
+mw.format(
+    HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
+    '123456',
+    'Apple'
     ) // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
 
 // 懒人写法（先简后繁）
-HanAssist.localize( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] ) 
-// => 等同于 HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) 
-HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] ) 
+HanAssist.localize( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] )
+// => 等同于 HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
+HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] )
 // => 等同于 HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
 ```
 
@@ -79,10 +79,10 @@ let ha = new HanAssist( {
 	} );
 
 ha.attach( function( msg ) { // 也可使用其他名称
-    // 使用 msg() 获取消息
+	// 使用 msg() 获取消息
 	msg( 'image' ); // => '文件'
 	msg( 'image1' ); // => 'image1'（控制台输出警告消息“HanAssist：未找到键‘image1’。您是指‘image’吗？”）
-    // 您的其他代码
+	// 您的其他代码
 } );
 ```
 
