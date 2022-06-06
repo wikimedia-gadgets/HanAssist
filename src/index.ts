@@ -10,7 +10,9 @@
 ( () => {
 	'use strict';
 
-	type CandidateKeys = 'zh' | 'hans' | 'hant' | 'cn' | 'hk' | 'mo' | 'my' | 'sg' | 'tw' | 'en';
+	const DEF_FB = [ 'en', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my' ] as const;
+
+	type CandidateKeys = typeof DEF_FB[ number ];
 	type RequireAtLeastOne<T> = {
 		[ K in keyof T ]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>;
 	}[ keyof T ];
@@ -32,33 +34,31 @@
 		'zh-tw': [ 'tw', 'hant', 'hk', 'mo', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ],
 		'zh-hk': [ 'hk', 'hant', 'mo', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ],
 		'zh-mo': [ 'mo', 'hant', 'hk', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ]
-	}, DEF_FB: readonly CandidateKeys[] = [ 'en', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my' ],
-		MSG_STORE: RawMessages = {
-			'ha-err': {
-				hans: 'HanAssist 错误：$1。\n有关 HanAssist 的更多信息，请参见 https://example.com/。',
-				hant: 'HanAssist 錯誤：$1。\n有關 HanAssist 的更多資訊，請參見 https://example.com/。',
-				en: 'HanAssist error: $1.\nFor more information of HanAssist, see https://example.com/.'
-			},
-			'ha-inv-param': {
-				hans: '无效参数“$1”$2', hant: '無效參數「$1」$2', en: 'Invalid parameter "$1"$2'
-			},
-			'ha-inv-param-detailed': {
-				hans: '，应为“$1”，实为“$2”', hant: '，應為「$1」，實為「$2」', en: ', Expected $1 but got $2'
-			},
-			'ha-no-msg': {
-				hans: '无法从“$1”中选择正确的消息，当前区域设置：$2', hant: '無法從「$1」中選擇正確的訊息，地區設定：$2', en: 'Failed to select message from "$1" in locale "$2"'
-			},
-			'ha-deprecated': {
-				hans: '请使用 $1 作为替代。', hant: '請使用 $1 作為替代。', en: 'Use $1 instead.'
-			},
-			'ha-no-key': {
-				hans: 'HanAssist：未找到键“$1”。$2', hant: 'HanAssist：未找到鍵「$1」。$2', en: 'HanAssist: Key "$1" not found. $2'
-			},
-			'ha-similar': {
-				hans: '您是指“$1”吗？', hant: '您是指「$1」嗎？', en: 'Did you mean "$1"?'
-			}
+	}, MSG_STORE: RawMessages = {
+		'ha-err': {
+			hans: 'HanAssist 错误：$1。\n有关 HanAssist 的更多信息，请参见 https://example.com/。',
+			hant: 'HanAssist 錯誤：$1。\n有關 HanAssist 的更多資訊，請參見 https://example.com/。',
+			en: 'HanAssist error: $1.\nFor more information of HanAssist, see https://example.com/.'
 		},
-		FB_SIMKEYPAIR_VAL: SimilarityKeyPair = { rating: 0, elem: '' };
+		'ha-inv-param': {
+			hans: '无效参数“$1”$2', hant: '無效參數「$1」$2', en: 'Invalid parameter "$1"$2'
+		},
+		'ha-inv-param-detailed': {
+			hans: '，应为“$1”，实为“$2”', hant: '，應為「$1」，實為「$2」', en: ', Expected $1 but got $2'
+		},
+		'ha-no-msg': {
+			hans: '无法从“$1”中选择正确的消息，当前区域设置：$2', hant: '無法從「$1」中選擇正確的訊息，地區設定：$2', en: 'Failed to select message from "$1" in locale "$2"'
+		},
+		'ha-deprecated': {
+			hans: '请使用 $1 作为替代。', hant: '請使用 $1 作為替代。', en: 'Use $1 instead.'
+		},
+		'ha-no-key': {
+			hans: 'HanAssist：未找到键“$1”。$2', hant: 'HanAssist：未找到鍵「$1」。$2', en: 'HanAssist: Key "$1" not found. $2'
+		},
+		'ha-similar': {
+			hans: '您是指“$1”吗？', hant: '您是指「$1」嗎？', en: 'Did you mean "$1"?'
+		}
+	}, FB_SIMKEYPAIR_VAL: SimilarityKeyPair = { rating: 0, elem: '' };
 
 	// #region Type guards
 
