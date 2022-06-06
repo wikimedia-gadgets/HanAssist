@@ -1,0 +1,92 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "compile",
+            "label": "webpack: compile",
+            "detail": "npm run compile-dev",
+            // "problemMatcher": "$fable-webpack",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "npm",
+            "script": "compile-babel",
+            "label": "babel: compile",
+            "detail": "babel --extensions .ts ./src --out-file ./dist/index.js",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": {
+                "kind": "build",
+            }
+        },
+        {
+            "type": "npm",
+            "script": "compile-tsc",
+            "label": "tsc: compile",
+            "problemMatcher": "$tsc",
+            "detail": "tsc -p ./",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": {
+                "kind": "build",
+            }
+        },
+        // {
+        //     "type": "npm",
+        //     "script": "watch",
+        //     "label": "tsc: watch",
+        //     "problemMatcher": "$tsc-watch",
+        //     "detail": "tsc -w",
+        //     "isBackground": true,
+        //     "presentation": {
+        //         "echo": true,
+        //         "reveal": "never",
+        //         "focus": false,
+        //         "panel": "shared",
+        //         "showReuseMessage": true,
+        //         "clear": false
+        //     },
+        //     "group": "build"
+        // },
+        {
+            "type": "npm",
+            "script": "lint",
+            "label": "eslint: lint",
+            "detail": "eslint -c .eslintrc.json --ext .ts ./src",
+            "problemMatcher": "$eslint-stylish",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "group": "none"
+        }
+    ]
+}

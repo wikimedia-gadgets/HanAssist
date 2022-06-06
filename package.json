@@ -1,0 +1,28 @@
+{
+	"scripts": {
+		"compile": "npm run compile-prod",
+		"compile-dev": "webpack --config webpack.config.js --mode development",
+		"compile-prod": "webpack --config webpack.config.js --mode production",
+		"compile-babel": "babel ./src/index.ts --out-file ./dist/index.js",
+		"compile-tsc": "tsc -p ./",
+		"lint": "eslint -c .eslintrc.json --ext .ts ./src"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.17.10",
+		"@babel/core": "^7.17.10",
+		"@babel/plugin-transform-runtime": "^7.18.2",
+		"@babel/preset-env": "^7.18.2",
+		"@babel/preset-typescript": "^7.17.12",
+		"@typescript-eslint/eslint-plugin": "^5.26.0",
+		"@typescript-eslint/parser": "^5.26.0",
+		"babel-loader": "^8.2.5",
+		"eslint-config-wikimedia": "^0.22.1",
+		"types-mediawiki": "^1.2.0",
+		"typescript": "^4.7.2",
+		"webpack": "^5.72.1",
+		"webpack-cli": "^4.9.2"
+	},
+	"dependencies": {
+		"core-js": "^3.22.4"
+	}
+}

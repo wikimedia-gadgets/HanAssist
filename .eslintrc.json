@@ -1,0 +1,24 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": "error",
+        "quotes": [
+            "error",
+            "single",
+            {
+                "allowTemplateLiterals": true
+            }
+        ]
+    },
+    "ignorePatterns": [
+        "dist",
+        "node_modules",
+        "webpack.config.js"
+    ]
+}
