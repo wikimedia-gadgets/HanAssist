@@ -10,6 +10,6 @@ Built from source code at GitHub repository [https://github.com/diskdance/HanAss
 All changes should be made in the repository, otherwise they will be lost.
 
 To update this script from GitHub, you must have a local repository set up. Then
-follow the instructions at [].
+follow the instructions at [https://github.com/diskdance/HanAssist/blob/main/CONTRIBUTING.MD].
 
 For license information, see [https://github.com/diskdance/HanAssist/blob/main/LICENSE].
