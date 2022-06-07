@@ -231,7 +231,7 @@
 	 */
 	function safelyElect( candidates: unknown, locale: string ): string {
 		if ( typeof locale !== 'string' ) {
-			raiseInvalidParamError( 'candidates' );
+			raiseInvalidParamError( 'locale', { expected: 'string', actual: getOutline( locale ) } );
 		}
 
 		if ( typeof candidates === 'string' ) {
@@ -242,18 +242,19 @@
 				return candidates[ 0 ];
 			} else if ( candidates.length === 2 && candidates.every( ( i ) => typeof i === 'string' ) ) {
 				return elect( { hans: candidates[ 0 ], hant: candidates[ 1 ] }, locale );
-			} else {
-				raiseInvalidParamError( 'candidates',
-					{
-						expected: 'string|[string]|[string,string]',
-						actual: getOutline( candidates )
-					} );
 			}
 		}
-		if ( !areCandidates( candidates ) ) {
-			raiseInvalidParamError( 'candidates' );
+		if ( areCandidates( candidates ) ) {
+			return elect( candidates, locale );
 		}
-		return elect( candidates, locale );
+
+		raiseInvalidParamError(
+			'candidates',
+			{
+				expected: 'string|[string]|[string,string]|Candidates',
+				actual: getOutline( candidates )
+			}
+		);
 	}
 
 	/**
