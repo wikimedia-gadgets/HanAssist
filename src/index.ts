@@ -19,6 +19,7 @@
 	type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
 	type RawMessages = Record<string, Candidates | string>;
 	type TranspiledMessages = Record<string, string>;
+	type AllOrNone<T> = T | { [ K in keyof T ]?: never };
 	type SimilarityKeyPair = {
 		rating: number,
 		elem: string
@@ -36,9 +37,9 @@
 		'zh-mo': [ 'mo', 'hant', 'hk', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ]
 	}, MSG_STORE: RawMessages = {
 		'ha-err': {
-			hans: 'HanAssist 错误：$1。\n有关 HanAssist 的更多信息，请参见 https://example.com/。',
-			hant: 'HanAssist 錯誤：$1。\n有關 HanAssist 的更多資訊，請參見 https://example.com/。',
-			en: 'HanAssist error: $1.\nFor more information of HanAssist, see https://example.com/.'
+			hans: 'HanAssist 错误：$1。\n有关 HanAssist 的更多信息，请参见 https://w.wiki/5FHQ',
+			hant: 'HanAssist 錯誤：$1。\n有關 HanAssist 的更多資訊，請參見 https://w.wiki/5FHQ/',
+			en: 'HanAssist error: $1.\nFor more information of HanAssist, see https://w.wiki/5FHQ'
 		},
 		'ha-inv-param': {
 			hans: '无效参数“$1”$2', hant: '無效參數「$1」$2', en: 'Invalid parameter "$1"$2'
@@ -120,11 +121,15 @@
 
 	/**
 	 * Throw `TypeError` with details about invalid parameters in its message.
+	 * @private
 	 * @param name parameter name
 	 * @param [expected] expected value
 	 * @param [actual] actual value
 	 */
-	function raiseInvalidParamError( name: string, expected?: string, actual?: string ): never {
+	function raiseInvalidParamError(
+		name: string,
+		{ expected, actual }: AllOrNone<{ expected: string, actual: string }> = {}
+	): never {
 		throw new TypeError( mw.msg( 'ha-err',
 			mw.msg(
 				'ha-inv-param',
@@ -135,29 +140,28 @@
 	}
 
 	/**
-	 * Get the type of an object.
+	 * Get a general description of an Object.
 	 * @private
-	 * @param obj object
-	 * @return type
+	 * @param val object
+	 * @return outline
 	 */
-	function getType( obj: unknown ): string {
-		return Object.prototype.toString.call( obj ).split( ' ' )[ 1 ].slice( 0, -1 ).toLowerCase();
-	}
-
-	/**
-	 * Return a string representing types of values in an array, separated with commas.
-	 * @private
-	 * @param arr array
-	 * @return types of values
-	 */
-	function arrayToStringOfTypes( arr: unknown[] ): string {
-		return `[${arr.map( ( i ) => getType( i ) ).join( ',' )}]`;
+	function getOutline( val: unknown ): string {
+		let outline: string | undefined = undefined;
+		try {
+			// stringify() can actually return undefined, TS declaration is wrong
+			// https://github.com/microsoft/TypeScript/issues/18879
+			outline = JSON.stringify( val );
+		} finally {
+			outline = outline || Object.prototype.toString.call( val );
+		}
+		return outline;
 	}
 
 	/**
 	 * Return the similarity of two strings, from 0.0 to 1.0
 	 *
 	 * From https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
+	 * @private
 	 * @param s1 string 1
 	 * @param s2 string 2
 	 * @return similarity, from 0.0 to 1.0, the higher the more similar
@@ -215,14 +219,7 @@
 			}
 		}
 
-		let objDesc: string;
-		try {
-			objDesc = JSON.stringify( candidates );
-		} catch {
-			objDesc = Object.prototype.toString.call( candidates );
-		}
-
-		throw new Error( mw.msg( 'ha-err', mw.msg( 'ha-no-msg', objDesc, locale ) ) );
+		throw new Error( mw.msg( 'ha-err', mw.msg( 'ha-no-msg', getOutline( candidates ), locale ) ) );
 	}
 
 	/**
@@ -246,11 +243,11 @@
 			} else if ( candidates.length === 2 && candidates.every( ( i ) => typeof i === 'string' ) ) {
 				return elect( { hans: candidates[ 0 ], hant: candidates[ 1 ] }, locale );
 			} else {
-				raiseInvalidParamError(
-					'candidates',
-					'string|[string]|[string,string]',
-					arrayToStringOfTypes( candidates )
-				);
+				raiseInvalidParamError( 'candidates',
+					{
+						expected: 'string|[string]|[string,string]',
+						actual: getOutline( candidates )
+					} );
 			}
 		}
 		if ( !areCandidates( candidates ) ) {
@@ -289,10 +286,12 @@ into this
 			} else {
 				raiseInvalidParamError(
 					key.includes( ' ' ) ? `rawMsg['${key}']` :
-						/^[0-9]/g.test( key ) ? `rawMsg[${key}]` :
+						/^\d/g.test( key ) ? `rawMsg[${key}]` :
 							`rawMsg.${key}`,
-					'string|Candidates',
-					getType( candidates )
+					{
+						expected: 'string|Candidates',
+						actual: getOutline( candidates )
+					}
 				);
 			}
 		}
@@ -344,11 +343,11 @@ ha.attach( function( msg ) {
 		 */
 		public constructor( rawMsg: unknown, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
 			if ( typeof locale !== 'string' ) {
-				raiseInvalidParamError( 'locale', 'string', getType( locale ) );
+				raiseInvalidParamError( 'locale', { expected: 'string', actual: getOutline( locale ) } );
 			}
 
 			if ( !isPlainObject( rawMsg ) || isEmptyObject( rawMsg ) ) {
-				raiseInvalidParamError( 'rawMsg' );
+				raiseInvalidParamError( 'rawMsg', { expected: 'RawMessages', actual: getOutline( rawMsg ) } );
 			}
 
 			this.#messages = Object.freeze( batchElect( rawMsg, locale ) );
@@ -357,6 +356,7 @@ ha.attach( function( msg ) {
 
 		/**
 		 * Show a warning message about missing keys and similar occurrences.
+		 * @private
 		 * @param key key missing
 		 */
 		#missingKey( key: string ): void {
@@ -472,7 +472,6 @@ HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫
 
 	// #region Legacy function shims
 
-	// wgULS
 	function legacyULS(
 		hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
 		zh: unknown, mo: unknown, my: unknown
@@ -480,7 +479,6 @@ HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫
 		return legacyUXS( mw.config.get( 'wgUserLanguage' ), hans, hant, cn, tw, hk, sg, zh, mo, my );
 	}
 
-	// wgUVS
 	function legacyUVS(
 		hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
 		zh: unknown, mo: unknown, my: unknown
@@ -488,7 +486,6 @@ HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫
 		return legacyUXS( mw.config.get( 'wgUserVariant' ), hans, hant, cn, tw, hk, sg, zh, mo, my );
 	}
 
-	// wgUXS
 	function legacyUXS(
 		wg: string, hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown,
 		sg: unknown, zh: unknown, mo: unknown, my: unknown

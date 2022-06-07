@@ -15,12 +15,11 @@
             },
             "group": {
                 "kind": "build",
-                "isDefault": true
             }
         },
         {
             "type": "npm",
-            "script": "compile-babel",
+            "script": "compile:babel",
             "label": "babel: compile",
             "presentation": {
                 "echo": true,
@@ -36,7 +35,7 @@
         },
         {
             "type": "npm",
-            "script": "compile-tsc",
+            "script": "compile:tsc",
             "label": "tsc: compile",
             "problemMatcher": "$tsc",
             "presentation": {

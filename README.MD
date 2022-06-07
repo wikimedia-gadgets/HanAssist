@@ -86,6 +86,11 @@ ha.attach( function( msg ) { // 也可使用其他名称
 } );
 ```
 
+## 局限
+在软件领域，[没有银弹](https://zh.wikipedia.org/wiki/%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9)，因此 HanAssist 也并非完美。在一些使用场景下，您应该使用其他更合适的工具而非 HanAssist。
+
+如果您的小工具或用户脚本需要多国语言支持，而非仅限于中文（汉语）一种，请考虑使用其他支持多语言处理的库，如 [``jQuery.i18n``](https://github.com/wikimedia/jquery.i18n)。
+
 ## 授权 & 致谢
 本程序由 Diskdance 等制作，采用 [The Unlicense](./LICENSE) 授权协议。
 
