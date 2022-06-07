@@ -2,6 +2,7 @@
 ## Prerequisites
 * `Node.js`
 * `npm` or `yarn`
+* `typescript` >= 4.3.5
 * Visual Studio Code (Recommended)
 
 ## Quick start

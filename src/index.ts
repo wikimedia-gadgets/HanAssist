@@ -70,7 +70,7 @@
 	 * @return return `true` if it is; return `false` otherwise
 	 */
 	function isPlainObject( val: unknown ): val is Record<string, unknown> {
-		if ( val === null || typeof val !== 'object' || 'nodeType' in val || val === window ) {
+		if ( typeof val !== 'object' || val === null || 'nodeType' in val || val === window ) {
 			return false;
 		}
 
