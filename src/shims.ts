@@ -5,18 +5,11 @@
 
 import { elect } from './elect';
 
-function legacyULS(
-	hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
-	zh: unknown, mo: unknown, my: unknown
-): unknown {
-	return legacyUXS( mw.config.get( 'wgUserLanguage' ), hans, hant, cn, tw, hk, sg, zh, mo, my );
-}
-
-function legacyUVS(
-	hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
-	zh: unknown, mo: unknown, my: unknown
-): unknown {
-	return legacyUXS( mw.config.get( 'wgUserVariant' ), hans, hant, cn, tw, hk, sg, zh, mo, my );
+function generateLegacyHelper( config: 'wgUserLanguage' | 'wgUserVariant' ) {
+	return (
+		hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
+		zh: unknown, mo: unknown, my: unknown
+	) => legacyUXS( mw.config.get( config ), hans, hant, cn, tw, hk, sg, zh, mo, my );
 }
 
 function legacyUXS(
@@ -33,8 +26,10 @@ function legacyUXS(
 /**
  * Add shim of `wgULS()`, `wgUVS()` and `wgUXS()` to the global scope.
  */
-export default function shimUXS() {
-	mw.log.deprecate( window, 'wgULS', legacyULS, mw.msg( 'ha-deprecated', 'HanAssist.localize()' ) );
-	mw.log.deprecate( window, 'wgUVS', legacyUVS, mw.msg( 'ha-deprecated', 'HanAssist.vary()' ) );
-	mw.log.deprecate( window, 'wgUXS', legacyUXS, mw.msg( 'ha-deprecated', 'HanAssist.localize()' ) );
+export default function shimLegacyHelpers() {
+	mw.log.deprecate( window, 'wgULS',
+		generateLegacyHelper( 'wgUserLanguage' ), 'Use HanAssist.localize() instead.' );
+	mw.log.deprecate( window, 'wgUVS',
+		generateLegacyHelper( 'wgUserVariant' ), 'Use HanAssist.vary() instead.' );
+	mw.log.deprecate( window, 'wgUXS', legacyUXS, 'Use HanAssist.localize() instead.' );
 }

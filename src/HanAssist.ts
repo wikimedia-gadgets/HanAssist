@@ -3,7 +3,6 @@
  * For license information please see LICENSE.
  */
 
-import { FB_SIMKEYPAIR_VAL } from './data';
 import { batchElect, safelyElect } from './elect';
 import { TranspiledMessages, SimilarityKeyPair, RawMessages, Candidates } from './types';
 import { raiseInvalidParamError, similarity } from './utils';
@@ -71,7 +70,7 @@ msg( 'image1' ); // => 'image1' (get a warning 'HanAssist: Key "image1" not foun
 			.filter( ( { rating } ): boolean => rating >= 0.6 ) // Ignore dissimilar keys
 			.reduce(
 				( l: SimilarityKeyPair, r: SimilarityKeyPair ) => l.rating >= r.rating ? l : r,
-				FB_SIMKEYPAIR_VAL
+				{ rating: 0, elem: '' }
 			);
 
 		this._warnedBucket[ key ] = true;
@@ -88,7 +87,7 @@ msg( 'image1' ); // => 'image1' (get a warning 'HanAssist: Key "image1" not foun
 		}
 
 		executor.call( this, ( key ) => {
-			if ( !( key in this._messages ) ) {
+			if ( !Object.prototype.hasOwnProperty.call( this._messages, key ) ) {
 				if ( !this._warnedBucket[ key ] ) {
 					setTimeout( () => this._missingKey( key ), 0 );
 				}
@@ -113,9 +112,6 @@ msg( 'image1' ); // => 'image1' (get a warning 'HanAssist: Key "image1" not foun
 ```
 HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) // => '一天一苹果，医生远离我。'
 
-// Shorthand syntax
-HanAssist.localize( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] ) // => '一天一苹果，医生远离我。'
-
 // Advanced: custom locale
 HanAssist.localize(
 { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' },
@@ -137,7 +133,7 @@ HanAssist.localize(
 	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 * @return selected string
 	 */
-	public static localize( candidates: string | [ string ] | [ string, string ] | Candidates,
+	public static localize( candidates: string | Candidates,
 		{ locale = mw.config.get( 'wgUserLanguage' ) } = {}
 	): string {
 		return safelyElect( candidates, locale );
@@ -150,9 +146,6 @@ HanAssist.localize(
 	 * @example Assume preferred variant is `zh-cn`:
 ```
 HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ) // => '一天一苹果，医生远离我。'
-
-// Shorthand syntax
-HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' ] ) // => '一天一苹果，医生远离我。'
 ```
 	 * @param candidates candidate strings
 	 * @param [candidates.zh] string in `zh`
@@ -167,7 +160,7 @@ HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫
 	 * @param [candidates.en] string in `en`
 	 * @return selected string
 	 */
-	public static vary( candidates: string | [ string ] | [ string, string ] | Candidates ): string {
+	public static vary( candidates: string | Candidates ): string {
 		return safelyElect(
 			candidates,
 			mw.config.get( 'wgUserVariant' ) || mw.user.options.get( 'variant' )

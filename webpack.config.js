@@ -5,23 +5,21 @@ const { resolve } = require( 'path' ),
 	TerserPlugin = require( 'terser-webpack-plugin' ),
 	{ readFileSync } = require( 'fs' );
 
-const minimizer = new TerserPlugin( {
+const IS_ES5 = true;
+
+const terser = new TerserPlugin( {
 	extractComments: false,
 	terserOptions: {
 		format: {
 			comments: /((^\*!|nowiki))/i // Preserve banners & nowiki guards
 		},
-		mangle: {
-			// For diagnosis purposes
-			reserved: [ 'rawMsg', 'locale', 'executor', 'candidates', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'zh', 'mo', 'my' ]
-		},
-		ecma: 5
+		ecma: IS_ES5 ? 5 : undefined
 	},
 } );
 
 /**@type {import('webpack').Configuration}*/
 const webpackConfig = {
-	entry: './src/browser-entry.ts',
+	entry: './src/index.ts',
 	resolve: {
 		extensions: [ '.ts', '.js' ]
 	},
@@ -35,18 +33,24 @@ const webpackConfig = {
 		]
 	},
 	output: {
+		clean: true,
+		library: {
+			name: 'HanAssist',
+			type: 'window',
+			export: 'default'
+		},
 		path: resolve( './dist' ),
 		filename: 'index.js',
 		environment: {
-			arrowFunction: false // No IIFE arrow
-		}
+			arrowFunction: !IS_ES5
+		},
 	},
 	plugins: [
 		new BannerPlugin( { banner: readFileSync( './gadget-prepend.js' ).toString(), raw: true } ),
 		new BannerPlugin( { banner: readFileSync( './gadget-append.js' ).toString(), footer: true, raw: true } )
 	],
 	optimization: {
-		minimizer: [ minimizer ]
+		minimizer: [ terser ]
 	},
 	devtool: 'source-map'
 }

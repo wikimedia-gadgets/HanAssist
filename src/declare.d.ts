@@ -9,7 +9,4 @@ export declare global {
 	namespace mw {
 		const messages: mw.Map<{ [ key: string ]: string }>;
 	}
-	interface Window {
-		HanAssist: HanAssist;
-	}
 }

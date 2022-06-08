@@ -3,10 +3,21 @@
  * For license information please see LICENSE.
  */
 
-import { FALLBACK_TABLE, DEF_FB } from './data';
-import { areCandidates } from './type-guards';
 import { CandidateKeys, Candidates, RawMessages, TranspiledMessages } from './types';
 import { raiseInvalidParamError } from './utils';
+
+const DEFAULT_FALLBACK = [ 'en', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my' ] as const,
+	FALLBACK_TABLE: Record<string, readonly CandidateKeys[]> = {
+		'zh': [ 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my', 'en' ],
+		'zh-hans': [ 'hans', 'cn', 'sg', 'my', 'zh', 'hant', 'tw', 'hk', 'mo', 'en' ],
+		'zh-hant': [ 'hant', 'tw', 'hk', 'mo', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ],
+		'zh-cn': [ 'cn', 'hans', 'sg', 'my', 'zh', 'hant', 'tw', 'hk', 'mo', 'en' ],
+		'zh-sg': [ 'sg', 'hans', 'cn', 'my', 'zh', 'hant', 'tw', 'hk', 'mo', 'en' ],
+		'zh-my': [ 'my', 'hans', 'cn', 'sg', 'zh', 'hant', 'tw', 'hk', 'mo', 'en' ],
+		'zh-tw': [ 'tw', 'hant', 'hk', 'mo', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ],
+		'zh-hk': [ 'hk', 'hant', 'mo', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ],
+		'zh-mo': [ 'mo', 'hant', 'hk', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'en' ]
+	};
 
 /**
  * Select the target localized entry based on locale.
@@ -15,8 +26,8 @@ import { raiseInvalidParamError } from './utils';
  * @param locale locale
  * @return selected entry
  */
-export function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string ): T {
-	const fallback: readonly CandidateKeys[] = FALLBACK_TABLE[ locale ] ?? DEF_FB;
+function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string ): T {
+	const fallback: readonly CandidateKeys[] = FALLBACK_TABLE[ locale ] || DEFAULT_FALLBACK;
 
 	for ( const key of fallback ) {
 		const winner = candidates[ key ];
@@ -35,26 +46,15 @@ export function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale:
  * @param locale locale
  * @return selected entry
  */
-export function safelyElect( candidates: string | [ string ] | [ string, string ] | Candidates, locale: string ): string {
+function safelyElect( candidates: string | Candidates, locale: string ): string {
+	if ( typeof candidates === 'string' ) {
+		return candidates;
+	}
 	if ( typeof locale !== 'string' ) {
 		raiseInvalidParamError( 'locale', 'string' );
 	}
 
-	if ( typeof candidates === 'string' ) {
-		return candidates;
-	}
-	if ( Array.isArray( candidates ) ) {
-		if ( candidates.length === 1 && typeof candidates[ 0 ] === 'string' ) {
-			return candidates[ 0 ];
-		} else if ( candidates.length === 2 && candidates.every( ( i ) => typeof i === 'string' ) ) {
-			return elect( { hans: candidates[ 0 ], hant: candidates[ 1 ] }, locale );
-		}
-	}
-	if ( areCandidates( candidates ) ) {
-		return elect( candidates, locale );
-	}
-
-	raiseInvalidParamError( 'candidates', 'string | [ string ] | [ string, string ] | Candidates' );
+	return elect( candidates, locale );
 }
 
 /**
@@ -74,21 +74,16 @@ into this
  * @param locale locale
  * @return transpiled messages
  */
-export function batchElect( rawMsg: RawMessages, locale: string ): TranspiledMessages {
+function batchElect( rawMsg: RawMessages, locale: string ): TranspiledMessages {
+	if ( !$.isPlainObject( rawMsg ) ) {
+		raiseInvalidParamError( 'rawMsg', 'RawMessages' );
+	}
+
 	const transpiledMsg: TranspiledMessages = Object.create( null );
 	for ( const key in rawMsg ) {
-		const candidates = rawMsg[ key ];
-
-		if ( typeof candidates === 'string' ) {
-			// All locales share the same message
-			transpiledMsg[ key ] = candidates;
-		} else if ( areCandidates( candidates ) ) {
-			transpiledMsg[ key ] = elect( candidates, locale );
-		} else {
-			raiseInvalidParamError( key.indexOf( ' ' ) !== -1 ? `rawMsg['${key}']` :
-				/^\d/g.test( key ) ? `rawMsg[${key}]` :
-					`rawMsg.${key}`, 'string | Candidates' );
-		}
+		transpiledMsg[ key ] = safelyElect( rawMsg[ key ], locale );
 	}
 	return transpiledMsg;
 }
+
+export { elect, batchElect, safelyElect, DEFAULT_FALLBACK };
