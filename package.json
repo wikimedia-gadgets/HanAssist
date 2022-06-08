@@ -1,33 +1,31 @@
 {
 	"name": "hanassist",
 	"author": "diskdance",
-	"version": "1.0.0",
-	"main": "src/index.ts",
-	"types": "src/index.d.ts",
+	"version": "0.0.1",
+	"browser": "src/browser-entry.ts",
+	"types": "index.d.ts",
 	"scripts": {
-		"compile": "npm run compile:prod",
-		"compile:dev": "webpack --config webpack.config.js --mode development",
-		"compile:prod": "webpack --config webpack.config.js --mode production",
-		"compile:babel": "babel ./src/index.ts --out-file ./dist/index.js",
-		"compile:tsc": "tsc -p ./",
-		"lint": "eslint -c .eslintrc.yml --ext .ts ./src"
+		"compile": "yarn run compile:webpack-prod",
+		"compile:tsc": "yarn run clean && tsc -p ./",
+		"compile:webpack-prod": "yarn run clean && webpack -c ./webpack.config.js --mode production",
+		"compile:webpack-dev": "yarn run clean && webpack -c ./webpack.config.js --mode development",
+		"lint": "eslint -c .eslintrc.yml --ext .ts ./src",
+		"clean": "rimraf ./dist"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.17.10",
-		"@babel/core": "^7.17.10",
-		"@babel/plugin-transform-runtime": "^7.18.2",
-		"@babel/preset-env": "^7.18.2",
-		"@babel/preset-typescript": "^7.17.12",
 		"@typescript-eslint/eslint-plugin": "^5.26.0",
 		"@typescript-eslint/parser": "^5.26.0",
-		"babel-loader": "^8.2.5",
+		"eslint": "^8.17.0",
 		"eslint-config-wikimedia": "^0.22.1",
+		"rimraf": "^3.0.2",
+		"ts-loader": "^9.3.0",
 		"types-mediawiki": "^1.2.0",
 		"typescript": "^4.7.2",
 		"webpack": "^5.72.1",
 		"webpack-cli": "^4.9.2"
 	},
 	"dependencies": {
-		"core-js": "^3.22.4"
+		"jquery": "^3.6.0",
+		"jsdom": "^19.0.0"
 	}
 }

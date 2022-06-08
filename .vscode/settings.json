@@ -1,26 +1,20 @@
 {
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-    // "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-    "javascript.preferences.quoteStyle": "single",
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
-    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
-    "typescript.preferences.quoteStyle": "single",
-    "editor.rulers": [
-        100
-    ],
-    "cSpell.words": [
-        "corejs",
-        "Diskdance",
-        "endregion",
-        "hanassist",
-        "nowiki",
-        "SIMKEYPAIR",
-        "Tranve",
-        "Уилсон",
-        "Фредериск",
-        "Холм"
-    ],
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+  "typescript.preferences.quoteStyle": "single",
+  "cSpell.words": [
+    "corejs",
+    "Diskdance",
+    "endregion",
+    "hanassist",
+    "nowiki",
+    "SIMKEYPAIR",
+    "Уилсон",
+    "Фредериск",
+    "Холм"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
 }

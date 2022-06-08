@@ -9,7 +9,7 @@ const minimizer = new TerserPlugin( {
 	extractComments: false,
 	terserOptions: {
 		format: {
-			comments: /((^!|nowiki))/i // Preserve banners & nowiki guards
+			comments: /((^\*!|nowiki))/i // Preserve banners & nowiki guards
 		},
 		mangle: {
 			// For diagnosis purposes
@@ -21,13 +21,16 @@ const minimizer = new TerserPlugin( {
 
 /**@type {import('webpack').Configuration}*/
 const webpackConfig = {
-	entry: './src/index.ts',
+	entry: './src/browser-entry.ts',
+	resolve: {
+		extensions: [ '.ts', '.js' ]
+	},
 	module: {
 		rules: [
 			{
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
-				use: [ 'babel-loader' ]
+				use: 'ts-loader'
 			}
 		]
 	},
@@ -39,9 +42,8 @@ const webpackConfig = {
 		}
 	},
 	plugins: [
-		new BannerPlugin( { banner: '// <nowiki>', raw: true } ),
-		new BannerPlugin( { banner: readFileSync( './gadget-banner.txt' ).toString() } ),
-		new BannerPlugin( { banner: '// </nowiki>', footer: true, raw: true } )
+		new BannerPlugin( { banner: readFileSync( './gadget-prepend.js' ).toString(), raw: true } ),
+		new BannerPlugin( { banner: readFileSync( './gadget-append.js' ).toString(), footer: true, raw: true } )
 	],
 	optimization: {
 		minimizer: [ minimizer ]

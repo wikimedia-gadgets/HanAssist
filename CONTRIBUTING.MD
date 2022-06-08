@@ -1,7 +1,7 @@
 # Contributing
 ## Prerequisites
-* `Node.js`
-* `npm` or `yarn`
+* `Node.js` v16
+* `yarn` or `npm`
 * `typescript` >= 4.3.5
 * Visual Studio Code (Recommended)
 
@@ -9,9 +9,9 @@
 From the root of the repo, run:
 
 ```sh
-npm install
-npm run lint
-npm run compile
+yarn
+yarn run lint
+yarn run compile
 ```
 
 Go to `./dist/` to see generated files.

@@ -1,36 +1,19 @@
 /**
- * HanAssist
- * ---------
- * Utilities to ease Chinese variant handling in user scripts and gadgets.
- * @author [[zh:User:Diskdance]]
- * @author [[zh:User:SunAfterRain]]
- * @license Unlicense
+ * @file Provides a class to handle Chinese variant conversions.
+ * For license information please see LICENSE.
  */
 
-declare namespace HanAssist {
-	type CandidateKeys = 'zh' | 'hans' | 'hant' | 'cn' | 'hk' | 'mo' | 'my' | 'sg' | 'tw' | 'en';
-	type RequireAtLeastOne<T> = {
-		[ K in keyof T ]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>;
-	}[ keyof T ];
-	type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
-	type RawMessages = Record<string, Candidates | string>;
-	type TranspiledMessages = Record<string, string>;
-	type Electable = string | [ string ] | [ string, string ] | Candidates;
-
-	interface ConstructorOptions {
-		locale?: string
-	}
-	interface LocalizationOptions {
-		locale?: string
-	}
-}
+import { FB_SIMKEYPAIR_VAL } from './data';
+import { batchElect, safelyElect } from './elect';
+import { TranspiledMessages, SimilarityKeyPair, RawMessages, Candidates } from './types';
+import { raiseInvalidParamError, similarity } from './utils';
 
 /**
  * Helper class to handle Chinese variant conversions.
  */
-declare class HanAssist {
-	#private; // Indicates the class has private members
-
+export default class HanAssist {
+	private _messages: TranspiledMessages;
+	private _warnedBucket: Record<string, boolean>;
 
 	/**
 	 * Instantiate a new instance of {@link HanAssist}.
@@ -56,30 +39,73 @@ let ha = new HanAssist( {
 ha.dump(); // => { 'article': '条目', 'category': '分类', 'categories': '分类', ... }
 
 ha.attach( function( msg ) {
-	msg( 'image' ); // => '文件'
-	msg( 'image1' ); // => 'image1' (get a warning 'HanAssist: Key "image1" not found. Did you mean "image"?')
+msg( 'image' ); // => '文件'
+msg( 'image1' ); // => 'image1' (get a warning 'HanAssist: Key "image1" not found. Did you mean "image"?')
 } );
 ```
 	 * @param rawMsg raw messages
 	 * @param [options] options
 	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 */
-	constructor( rawMsg: HanAssist.RawMessages, options: HanAssist.ConstructorOptions );
+	public constructor( rawMsg: RawMessages, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
+		if ( typeof locale !== 'string' ) {
+			raiseInvalidParamError( 'locale', 'string' );
+		}
 
+		if ( !$.isPlainObject( rawMsg ) || $.isEmptyObject( rawMsg ) ) {
+			raiseInvalidParamError( 'rawMsg', 'RawMessages' );
+		}
+
+		this._messages = Object.freeze( batchElect( rawMsg, locale ) );
+		this._warnedBucket = Object.create( null );
+	}
+
+	/**
+	 * Show a warning message about missing keys and similar occurrences.
+	 * @private
+	 * @param key key missing
+	 */
+	private _missingKey( key: string ): void {
+		const { elem: similar } = Object.keys( this._messages )
+			.map( ( elem ): SimilarityKeyPair => ( { rating: similarity( elem, key ), elem } ) )
+			.filter( ( { rating } ): boolean => rating >= 0.6 ) // Ignore dissimilar keys
+			.reduce(
+				( l: SimilarityKeyPair, r: SimilarityKeyPair ) => l.rating >= r.rating ? l : r,
+				FB_SIMKEYPAIR_VAL
+			);
+
+		this._warnedBucket[ key ] = true;
+		mw.log.warn( mw.msg( 'ha-no-key', key, similar ? mw.msg( 'ha-similar', similar ) : '' ) );
+	}
 
 	/**
 	 * Execute a function with a message getter as its first parameter.
 	 * @param executor function to be executed
 	 */
-	attach( executor: ( msg: ( key: string ) => string ) => void ): void;
+	public attach( executor: ( msg: ( key: string ) => string ) => void ): void {
+		if ( typeof executor !== 'function' ) {
+			raiseInvalidParamError( 'executor', '( msg: ( key: string ) => string ) => void' );
+		}
 
+		executor.call( this, ( key ) => {
+			if ( !( key in this._messages ) ) {
+				if ( !this._warnedBucket[ key ] ) {
+					setTimeout( () => this._missingKey( key ), 0 );
+				}
+				return key;
+			}
+
+			return this._messages[ key ];
+		} );
+	}
 
 	/**
 	 * Get the transpiled messages.
 	 * @return messages
 	 */
-	dump(): HanAssist.TranspiledMessages;
-
+	public dump(): TranspiledMessages {
+		return this._messages;
+	}
 
 	/**
 	 * Return the string, if any, in the current user language.
@@ -111,8 +137,11 @@ HanAssist.localize(
 	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 * @return selected string
 	 */
-	static localize( candidates: HanAssist.Electable, options: HanAssist.LocalizationOptions ): string;
-
+	public static localize( candidates: string | [ string ] | [ string, string ] | Candidates,
+		{ locale = mw.config.get( 'wgUserLanguage' ) } = {}
+	): string {
+		return safelyElect( candidates, locale );
+	}
 
 	/**
 	 * Return the string, if any, in the current user variant.
@@ -138,7 +167,10 @@ HanAssist.vary( [ '一天一苹果，医生远离我。', '一天一蘋果，醫
 	 * @param [candidates.en] string in `en`
 	 * @return selected string
 	 */
-	static vary( candidates: HanAssist.Electable ): string;
+	public static vary( candidates: string | [ string ] | [ string, string ] | Candidates ): string {
+		return safelyElect(
+			candidates,
+			mw.config.get( 'wgUserVariant' ) || mw.user.options.get( 'variant' )
+		);
+	}
 }
-
-
