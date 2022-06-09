@@ -29,7 +29,11 @@ jobs:
           node-version: '16'
           cache: 'yarn'
       - name: Install & Generate TypeDoc
-        run: yarn install --frozen-lockfile && yarn run typedoc
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "github-action@users.noreply.github.com"
+          yarn install --frozen-lockfile
+          yarn run typedoc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
