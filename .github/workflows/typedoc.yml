@@ -30,8 +30,6 @@ jobs:
           cache: 'yarn'
       - name: Install & Generate TypeDoc
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "github-action@users.noreply.github.com"
           yarn install --frozen-lockfile
           yarn run typedoc
       - name: Deploy
@@ -39,3 +37,5 @@ jobs:
         with:
           branch: gh-pages
           folder: docs
+          git-config-name: github-actions[bot]
+          git-config-email: github-actions[bot]@users.noreply.github.com
