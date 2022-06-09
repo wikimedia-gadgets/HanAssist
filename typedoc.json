@@ -1,0 +1,12 @@
+{
+    "tsconfig": "./tsconfig.json",
+    "entryPoints": [
+        "./src/index.ts",
+        "./src/types.ts",
+        "./src/elect.ts"
+    ],
+    "readme": "none",
+    "out": "./docs",
+    "excludePrivate": true,
+    "name": "HanAssist Documentation"
+}

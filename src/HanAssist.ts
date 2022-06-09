@@ -4,13 +4,18 @@
  */
 
 import { batchElect, safelyElect } from './elect';
-import { TranspiledMessages, SimilarityKeyPair, RawMessages, Candidates } from './types';
+import { TranspiledMessages, RawMessages, Candidates } from './types';
 import { raiseInvalidParamError, similarity } from './utils';
+
+interface SimilarityKeyPair {
+	rating: number,
+	elem: string
+}
 
 /**
  * Helper class to handle Chinese variant conversions.
  */
-export default class HanAssist {
+export class HanAssist {
 	private _messages: TranspiledMessages;
 	private _warnedBucket: Record<string, boolean>;
 

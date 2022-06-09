@@ -37,7 +37,7 @@ const webpackConfig = {
 		library: {
 			name: 'HanAssist',
 			type: 'window',
-			export: 'default'
+			export: 'HanAssist'
 		},
 		path: resolve( './dist' ),
 		filename: 'index.js',

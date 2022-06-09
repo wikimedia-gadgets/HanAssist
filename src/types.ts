@@ -4,19 +4,16 @@
  */
 import { DEFAULT_FALLBACK } from './elect';
 
-export type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
+type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
 
-export type RequireAtLeastOne<T> = {
+type RequireAtLeastOne<T> = {
 	[ K in keyof T ]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>;
 }[ keyof T ];
 
-export type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
+type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
 
-export type RawMessages = Record<string, Candidates | string>;
+type RawMessages = Record<string, Candidates | string>;
 
-export type TranspiledMessages = Record<string, string>;
+type TranspiledMessages = Record<string, string>;
 
-export type SimilarityKeyPair = {
-	rating: number,
-	elem: string
-}
+export { RawMessages, TranspiledMessages, RequireAtLeastOne, Candidates, CandidateKeys };

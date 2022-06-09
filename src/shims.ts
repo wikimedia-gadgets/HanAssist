@@ -5,13 +5,6 @@
 
 import { elect } from './elect';
 
-function generateLegacyHelper( config: 'wgUserLanguage' | 'wgUserVariant' ) {
-	return (
-		hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
-		zh: unknown, mo: unknown, my: unknown
-	) => legacyUXS( mw.config.get( config ), hans, hant, cn, tw, hk, sg, zh, mo, my );
-}
-
 function legacyUXS(
 	wg: string, hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown,
 	sg: unknown, zh: unknown, mo: unknown, my: unknown
@@ -23,13 +16,18 @@ function legacyUXS(
 	}
 }
 
-/**
- * Add shim of `wgULS()`, `wgUVS()` and `wgUXS()` to the global scope.
- */
-export default function shimLegacyHelpers() {
-	mw.log.deprecate( window, 'wgULS',
-		generateLegacyHelper( 'wgUserLanguage' ), 'Use HanAssist.localize() instead.' );
-	mw.log.deprecate( window, 'wgUVS',
-		generateLegacyHelper( 'wgUserVariant' ), 'Use HanAssist.vary() instead.' );
-	mw.log.deprecate( window, 'wgUXS', legacyUXS, 'Use HanAssist.localize() instead.' );
+function generateLegacyHelper( configName: 'wgUserLanguage' | 'wgUserVariant' ) {
+	return (
+		hans: unknown, hant: unknown, cn: unknown, tw: unknown, hk: unknown, sg: unknown,
+		zh: unknown, mo: unknown, my: unknown
+	) => legacyUXS( mw.config.get( configName ), hans, hant, cn, tw, hk, sg, zh, mo, my );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function shim( name: string, func: ( ...args: any[] ) => unknown, replacement: string ) {
+	mw.log.deprecate( window, name, func, `Use HanAssist.${replacement}() instead.` );
+}
+
+shim( 'wgULS', generateLegacyHelper( 'wgUserLanguage' ), 'localize' );
+shim( 'wgULS', generateLegacyHelper( 'wgUserVariant' ), 'vary' );
+shim( 'wgULS', legacyUXS, 'localize' );

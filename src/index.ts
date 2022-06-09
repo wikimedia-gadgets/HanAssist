@@ -6,7 +6,6 @@
 'use strict';
 
 import { batchElect } from './elect';
-import shimLegacyHelpers from './shims';
 
 // Set error messages.
 mw.messages.set( batchElect( {
@@ -29,7 +28,6 @@ mw.messages.set( batchElect( {
     }
 }, mw.config.get( 'wgUserLanguage' ) ) );
 
-// Add shim for wgU?S().
-shimLegacyHelpers();
+import './shims';
 
-export { default } from './HanAssist';
+export { HanAssist } from './HanAssist';
