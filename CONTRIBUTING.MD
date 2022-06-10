@@ -1,7 +1,7 @@
 # Contributing
 ## Prerequisites
 * `Node.js` v16
-* `yarn` or `npm`
+* `yarn`
 * `typescript` >= 4.3.5
 * Visual Studio Code (Recommended)
 

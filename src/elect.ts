@@ -3,8 +3,13 @@
  * For license information please see LICENSE.
  */
 
-import { CandidateKeys, Candidates, RawMessages, TranspiledMessages } from './types';
-import { raiseInvalidParamError } from './utils';
+type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
+
+type RequireAtLeastOne<T> = {
+	[ K in keyof T ]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>;
+}[ keyof T ];
+
+type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
 
 const DEFAULT_FALLBACK = [ 'en', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my' ] as const,
 	FALLBACK_TABLE: Record<string, readonly CandidateKeys[]> = {
@@ -39,51 +44,4 @@ function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string
 	throw new Error( mw.msg( 'ha-err', mw.msg( 'ha-no-msg' ) ) );
 }
 
-/**
- * Check the type of {@link candidates} in runtime and call {@link elect()} respectively.
- * @private
- * @param candidates candidates
- * @param locale locale
- * @return selected entry
- */
-function safelyElect( candidates: string | Candidates, locale: string ): string {
-	if ( typeof candidates === 'string' ) {
-		return candidates;
-	}
-	if ( typeof locale !== 'string' ) {
-		raiseInvalidParamError( 'locale', 'string' );
-	}
-
-	return elect( candidates, locale );
-}
-
-/**
- * Localize messages in batches. It turns an object like this
-```
-{
-apple: { hans: '苹果', hant: '蘋果', en: 'apple' },
-banana: { hans: '香蕉', hant: '香蕉', en: 'banana' }
-}
-```
-into this
-```
-{ apple: '苹果', banana: '香蕉' }
-```
- * @private
- * @param rawMsg raw messages
- * @param locale locale
- * @return transpiled messages
- */
-function batchElect( rawMsg: RawMessages, locale: string ): TranspiledMessages {
-	if ( !$.isPlainObject( rawMsg ) ) {
-		raiseInvalidParamError( 'rawMsg', 'RawMessages' );
-	}
-
-	const transpiledMsg: TranspiledMessages = Object.create( null );
-	for ( const key in rawMsg ) {
-		transpiledMsg[ key ] = safelyElect( rawMsg[ key ], locale );
-	}
-	return transpiledMsg;
-}
-
-export { elect, batchElect, safelyElect, DEFAULT_FALLBACK };
+export { elect, Candidates };

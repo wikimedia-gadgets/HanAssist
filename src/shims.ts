@@ -29,5 +29,5 @@ function shim( name: string, func: ( ...args: any[] ) => unknown, replacement: s
 }
 
 shim( 'wgULS', generateLegacyHelper( 'wgUserLanguage' ), 'localize' );
-shim( 'wgULS', generateLegacyHelper( 'wgUserVariant' ), 'vary' );
-shim( 'wgULS', legacyUXS, 'localize' );
+shim( 'wgUVS', generateLegacyHelper( 'wgUserVariant' ), 'vary' );
+shim( 'wgUXS', legacyUXS, 'localize' );

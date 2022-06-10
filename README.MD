@@ -36,55 +36,48 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 一般用法如下所示：
 
 ```javascript
-// 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' )
-HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
+// 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
+HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 
-// 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' )
-HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } )
+// 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' );
+HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } );
 
-// 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' )
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } )
+// 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
+HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 
 // 配合占位符号使用
 mw.format(
     HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
     '123456',
     'Apple'
-) // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
+); // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
 
 // 高级用法：指定语言
 // 等同于 wgUXS( 'zh-hans', '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' )
 HanAssist.localize(
 	{ hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' },
 	{ locale: 'zh-hans' }
-)
+);
 ```
 
 批量转译消息：
 ```javascript
-let ha = new HanAssist( {
-		'article': { hans: '条目', hant: '條目' },
-		'category': { hans: '分类', hant: '分類' },
-		'categories': { hans: '分类', hant: '分類' },
-		'image': { hans: '文件', hant: '檔案' },
-		'images': { hans: '文件', hant: '檔案' },
-		'minute': '分',
-		'minutes': '分',
-		'second': '秒',
-		'seconds': '秒',
-		'week': '周',
-		'weeks': '周',
-		'search': { hans: '搜索', hant: '搜尋' },
-		'SearchHint': { hans: '搜索包含%s的页面', hant: '搜尋包含%s的頁面' },
-		'web': { hans: '站点', hant: '站點' },
-	} );
-
-ha.attach( function( msg ) { // 也可使用其他名称
-	// 使用 msg() 获取消息
-	msg( 'image' ); // => '文件'
-	msg( 'image1' ); // => 'image1'（控制台输出警告消息“HanAssist：未找到键‘image1’。您是指‘image’吗？”）
-	// 您的其他代码
-} );
+HanAssist.parse( {
+	'article': { hans: '条目', hant: '條目' },
+	'category': { hans: '分类', hant: '分類' },
+	'categories': { hans: '分类', hant: '分類' },
+	'image': { hans: '文件', hant: '檔案' },
+	'images': { hans: '文件', hant: '檔案' },
+	'minute': '分',
+	'minutes': '分',
+	'second': '秒',
+	'seconds': '秒',
+	'week': '周',
+	'weeks': '周',
+	'search': { hans: '搜索', hant: '搜尋' },
+	'SearchHint': { hans: '搜索包含%s的页面', hant: '搜尋包含%s的頁面' },
+	'web': { hans: '站点', hant: '站點' },
+} ); // => { 'article': '条目', 'category': '分类', 'categories': '分类', ... }
 ```
 
 ## 局限
