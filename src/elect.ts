@@ -3,6 +3,8 @@
  * For license information please see LICENSE.
  */
 
+import { raiseInvalidParamError } from './utils';
+
 type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
 
 type RequireAtLeastOne<T> = {
@@ -44,4 +46,29 @@ function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string
 	throw new Error( mw.msg( 'ha-err', mw.msg( 'ha-no-msg' ) ) );
 }
 
-export { elect, Candidates };
+/**
+ * Check the type of `candidates` at runtime and call `elect()` respectively.
+ * @private
+ * @param candidates candidates
+ * @param locale locale
+ * @return selected entry
+ */
+function safelyElect( candidates: string | Candidates, locale: string ): string {
+	if ( typeof candidates === 'string' ) {
+		return candidates;
+	}
+	if ( typeof locale !== 'string' ) {
+		raiseInvalidParamError( 'locale', 'string' );
+	}
+	if ( !$.isPlainObject( candidates ) ) {
+		raiseInvalidParamError( 'candidates', 'Candidates' );
+	}
+
+	const winner = elect( candidates, locale );
+	if ( typeof winner !== 'string' ) {
+		raiseInvalidParamError( 'candidates', 'Candidates' );
+	}
+	return winner;
+}
+
+export { elect, Candidates, safelyElect };

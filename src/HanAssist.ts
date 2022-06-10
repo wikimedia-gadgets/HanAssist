@@ -3,42 +3,8 @@
  * For license information please see LICENSE.
  */
 
-import { elect, Candidates } from './elect';
-
-/**
- * Throw `TypeError` with details about invalid parameters in its message.
- * @private
- * @param name parameter name
- * @param expected expected value
- */
-function raiseInvalidParamError( name: string, expected: string ): never {
-	throw new TypeError( mw.msg( 'ha-err', mw.msg( 'ha-inv-param', name, expected ) ) );
-}
-
-/**
- * Check the type of `candidates` at runtime and call `elect()` respectively.
- * @private
- * @param candidates candidates
- * @param locale locale
- * @return selected entry
- */
-function safelyElect( candidates: string | Candidates, locale: string ): string {
-	if ( typeof candidates === 'string' ) {
-		return candidates;
-	}
-	if ( typeof locale !== 'string' ) {
-		raiseInvalidParamError( 'locale', 'string' );
-	}
-	if ( !$.isPlainObject( candidates ) ) {
-		raiseInvalidParamError( 'candidates', 'Candidates' );
-	}
-
-	const winner = elect( candidates, locale );
-	if ( typeof winner !== 'string' ) {
-		raiseInvalidParamError( 'candidates', 'Candidates' );
-	}
-	return winner;
-}
+import { Candidates, safelyElect } from './elect';
+import { raiseInvalidParamError } from './utils';
 
 /**
  * Helper to handle Chinese variant conversions.
