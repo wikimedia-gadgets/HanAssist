@@ -108,6 +108,6 @@ mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Ap
 如果您的小工具或用户脚本需要多国语言支持，而非仅限于中文（汉语）一种，请考虑使用其他支持多语言处理的库，如 [``jQuery.i18n``](https://github.com/wikimedia/jquery.i18n)。
 
 ## 授权 & 致谢
-本程序由 Diskdance 等制作，采用 [The Unlicense](./LICENSE) 授权协议。
+本程序由 Diskdance 等制作，采用 [3-Clause BSD License](./LICENSE) 授权协议。
 
 特别感谢中文维基百科用户 [Роу Уилсон Фредериск Холм](https://zh.wikipedia.org/wiki/User:Роу_Уилсон_Фредериск_Холм) 和 [SunAfterRain](https://zh.wikipedia.org/wiki/User:SunAfterRain) 在制作过程中给予的支持，尤其是关于 TypeScript 方面问题的解答。

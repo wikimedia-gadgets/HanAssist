@@ -1,5 +1,5 @@
 /**
- * @file Contains types necessary for development.
+ * @file Contains required type definitions for development.
  * For license information please see LICENSE.
  */
 
