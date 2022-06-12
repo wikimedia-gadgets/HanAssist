@@ -2,6 +2,8 @@
 	"name": "hanassist",
 	"author": "diskdance",
 	"version": "0.0.1",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"compile": "yarn run compile:webpack-prod",
 		"compile:tsc": "tsc -p ./",

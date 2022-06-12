@@ -9,7 +9,7 @@ import { raiseInvalidParamError } from './utils';
 /**
  * Helper to handle Chinese variant conversions.
  */
-abstract class HanAssist {
+interface HanAssistStatic {
 	/**
 	 * Parse a list of candidate messages.
 	 * @example Assuming `wgUserLanguage` is set to `zh-cn`:
@@ -28,27 +28,12 @@ mw.messages.set( HanAssist.parse( {
 mw.msg( 'apple' ); // => 苹果
 ```
 	 * @param rawMsg raw messages
-	 * @param [option]
-	 * @param [option.locale] locale, default to `wgUserLanguage`
+	 * @param [options]
+	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 * @return transpiled messages
 	 */
-	static parse(
-		rawMsg: Record<string, Candidates | string>,
-		{ locale = mw.config.get( 'wgUserLanguage' ) } = {}
-	): Record<string, string> {
-		if ( typeof locale !== 'string' ) {
-			raiseInvalidParamError( 'locale', 'string' );
-		}
-		if ( !$.isPlainObject( rawMsg ) || $.isEmptyObject( rawMsg ) ) {
-			raiseInvalidParamError( 'rawMsg', 'RawMessages' );
-		}
-
-		const transpiledMsg: Record<string, string> = Object.create( null );
-		for ( const key in rawMsg ) {
-			transpiledMsg[ key ] = safelyElect( rawMsg[ key ], locale );
-		}
-		return transpiledMsg;
-	}
+	parse: ( rawMsg: Record<string, Candidates | string>,
+		options?: { locale?: string } ) => Record<string, string>,
 
 	/**
 	 * Return the string, if any, in the current user language.
@@ -79,20 +64,16 @@ HanAssist.localize(
 	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 * @return selected string
 	 */
-	static localize(
-		candidates: string | Candidates, { locale = mw.config.get( 'wgUserLanguage' ) } = {}
-	): string {
-		return safelyElect( candidates, locale );
-	}
+	localize: ( candidates: string | Candidates, options?: { locale?: string } ) => string,
 
 	/**
 	 * Return the string, if any, in the current user variant.
 	 *
 	 * If `wgUserVariant` is undefined, preferred variant in Special:Preference will be used.
 	 * @example Assuming preferred variant is `zh-cn`:
-```
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ); // => 一天一苹果，医生远离我。
-```
+	```
+	HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ); // => 一天一苹果，医生远离我。
+	```
 	 * @param candidates
 	 * @param [candidates.zh] message in `zh`
 	 * @param [candidates.hans] message in `zh-hans`
@@ -106,12 +87,36 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 	 * @param [candidates.en] message in `en`
 	 * @return message in the current user variant
 	 */
-	static vary( candidates: string | Candidates ): string {
+	vary: ( candidates: string | Candidates ) => string
+}
+
+
+const HanAssist: HanAssistStatic = {
+	parse( rawMsg, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
+		if ( typeof locale !== 'string' ) {
+			raiseInvalidParamError( 'locale', 'string' );
+		}
+		if ( !$.isPlainObject( rawMsg ) || $.isEmptyObject( rawMsg ) ) {
+			raiseInvalidParamError( 'rawMsg', 'RawMessages' );
+		}
+
+		const transpiledMsg: Record<string, string> = Object.create( null );
+		for ( const key in rawMsg ) {
+			transpiledMsg[ key ] = safelyElect( rawMsg[ key ], locale );
+		}
+		return transpiledMsg;
+	},
+
+	localize( candidates, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
+		return safelyElect( candidates, locale );
+	},
+
+	vary( candidates ) {
 		return safelyElect(
 			candidates,
 			mw.config.get( 'wgUserVariant' ) || mw.user.options.get( 'variant' )
 		);
 	}
-}
+};
 
-export default HanAssist;
+export { HanAssistStatic, HanAssist };

@@ -5,7 +5,7 @@
 
 'use strict';
 
-import HanAssist from './HanAssist';
+import { HanAssist, HanAssistStatic } from './HanAssist';
 
 // Set error messages.
 mw.messages.set( HanAssist.parse( {
@@ -18,10 +18,12 @@ mw.messages.set( HanAssist.parse( {
 		hans: '无效参数“$1”，应为“$2”', hant: '無效參數「$1」，應為「$2」', en: 'Invalid parameter "$1", expect $2.'
 	},
 	'ha-no-msg': {
-		hans: '无法选择消息，请检查代码是否包含错误', hant: '無法選擇訊息，請檢查程式碼是否包含錯誤', en: 'Cannot select message, please check your code for errors'
+		hans: '无法选择消息，请检查代码是否包含错误',
+		hant: '無法選擇訊息，請檢查程式碼是否包含錯誤',
+		en: 'Cannot select message, please check your code for errors'
 	}
 } ) );
 
 import './shims';
 
-export { HanAssist };
+export { HanAssist, HanAssistStatic };
