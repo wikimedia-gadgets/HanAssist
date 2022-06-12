@@ -98,7 +98,7 @@ mw.messages.set( HanAssist.parse( {
 } ) );
 
 mw.msg( 'categories' ); // => 界面语言为简中：“分类”；繁中：“分類”
-mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Apple的页面”；繁中：“搜索包含Apple的页面”
+mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Apple的页面”；繁中：“搜尋包含Apple的頁面”
 // 其他用法详见 MediaWiki 文档
 ```
 
