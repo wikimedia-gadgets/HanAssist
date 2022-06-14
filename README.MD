@@ -15,14 +15,15 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 ``wgULS()``和``wgUVS()``几乎是中文维基百科每个用户脚本和小工具都要使用到的功能。它们极大方便了中文变体消息的处理，但随着 JavaScript 的发展，它们的问题也逐渐显现：
 
 1. 仍然使用旧式的``wgXXX``类名称，污染全局空间。现今 MediaWiki 中的此类变量全部通过``mw.config.get()``获取，但这两个函数并未也无法跟进。
-2. 参数列表过长，影响阅读。设计良好的 JavaScript 函数[最多仅应包含两个参数](https://github.com/ryanmcdermott/clean-code-javascript#function-arguments-2-or-fewer-ideally)。
+2. 使用意义不明的缩写，影响代码可读性。
+3. 参数列表过长，影响阅读。设计良好的 JavaScript 函数[最多仅应包含两个参数](https://github.com/ryanmcdermott/clean-code-javascript#function-arguments-2-or-fewer-ideally)。
    设想一下，如果像这样调用``wgULS()``：
    ```javascript
    wgULS( undefined, undefined, '显示%s的用户日志', '顯示%s的使用者日誌', '顯示%s的用戶日誌' );
    ```
    难道不会使代码非常难以阅读及维护？
-3. 并非类型安全。``wgULS()``和``wgUVS()``允许任何类型的参数传入，这可能会导致非预期的行为发生，并且使得代码难以维护。
-4. 没有代码文档。这使得不了解这些函数的人必须通过直接阅读代码来确定它们的用法。
+4. 并非类型安全。``wgULS()``和``wgUVS()``允许任何类型的参数传入，这可能会导致非预期的行为发生，并且使得代码难以维护。
+5. 没有代码文档。这使得不了解这些函数的人必须通过直接阅读代码来确定它们的用法。
 
 为了解决这些问题，我们制作了 HanAssist。它具有如下优点：
 
