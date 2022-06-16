@@ -1,4 +1,6 @@
 # HanAssist
+[代码文档](https://diskdance.github.io/HanAssist/)
+
 HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
 
 本程序的目标是取代``wgULS()``和``wgUVS()``小工具。

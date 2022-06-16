@@ -15,14 +15,14 @@ interface HanAssistStatic {
 	 * @example Assuming `wgUserLanguage` is set to `zh-cn`:
 ```
 HanAssist.parse( {
-	apple: { hans: '苹果', hant: '蘋果', en: 'apple' },
-	banana: { hans: '香蕉', hant: '香蕉', en: 'banana' }
+	apple: { hans: '苹果', hant: '蘋果', other: 'apple' },
+	banana: { hans: '香蕉', hant: '香蕉', other: 'banana' }
 } ); // => { apple: '苹果', banana: '香蕉' }
 
 // Use with mw.messages is encouraged.
 mw.messages.set( HanAssist.parse( {
-	apple: { hans: '苹果', hant: '蘋果', en: 'apple' },
-	banana: { hans: '香蕉', hant: '香蕉', en: 'banana' }
+	apple: { hans: '苹果', hant: '蘋果', other: 'apple' },
+	banana: { hans: '香蕉', hant: '香蕉', other: 'banana' }
 } ) );
 
 mw.msg( 'apple' ); // => 苹果
@@ -59,7 +59,7 @@ HanAssist.localize(
 	 * @param [candidates.sg] message in `zh-sg`
 	 * @param [candidates.mo] message in `zh-mo`
 	 * @param [candidates.my] message in `zh-my`
-	 * @param [candidates.en] message in `en`
+	 * @param [candidates.other] message in non-zh locales
 	 * @param [options]
 	 * @param [options.locale] locale, default to `wgUserLanguage`
 	 * @return selected string
@@ -84,7 +84,7 @@ HanAssist.localize(
 	 * @param [candidates.sg] message in `zh-sg`
 	 * @param [candidates.mo] message in `zh-mo`
 	 * @param [candidates.my] message in `zh-my`
-	 * @param [candidates.en] message in `en`
+	 * @param [candidates.other] message in non-zh locales
 	 * @return message in the current user variant
 	 */
 	vary: ( candidates: string | Candidates ) => string
