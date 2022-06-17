@@ -36,8 +36,23 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 5. 支持批量转译消息，在代码大量依赖中文变体消息时可极大减少代码复杂程度。
 
 ## 用法
-一般用法如下所示：
+``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其内容如下所示：
+```typescript
+{
+	zh: string, // 中文（不转换）消息
+	hans: string, // 中文（简体）消息
+	hant: string, // 中文（繁體）消息
+	cn: string, // 大陆简体消息
+	tw: string, // 台灣正體消息
+	hk: string, // 香港繁體消息
+	mo: string, // 澳門繁體消息
+	my: string, // 大马简体消息
+	sg: string, // 新加坡简体消息
+	other: string // 非中文语言（如英语）消息
+}
+```
 
+两者的用法：
 ```javascript
 // 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
 HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );

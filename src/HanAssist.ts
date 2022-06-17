@@ -28,8 +28,8 @@ mw.messages.set( HanAssist.parse( {
 mw.msg( 'apple' ); // => 苹果
 ```
 	 * @param rawMsg raw messages
-	 * @param [options]
-	 * @param [options.locale] locale, default to `wgUserLanguage`
+	 * @param options
+	 * @param options.locale locale, default to `wgUserLanguage`
 	 * @return transpiled messages
 	 */
 	parse: ( rawMsg: Record<string, Candidates | string>,
@@ -49,19 +49,9 @@ HanAssist.localize(
 { locale: 'zh-tw' }
 ); // => 一天一蘋果，醫生遠離我。
 ```
-	 * @param candidates
-	 * @param [candidates.zh] message in `zh`
-	 * @param [candidates.hans] message in `zh-hans`
-	 * @param [candidates.hant] message in `zh-hant`
-	 * @param [candidates.cn] message in `zh-cn`
-	 * @param [candidates.tw] message in `zh-tw`
-	 * @param [candidates.hk] message in `zh-hk`
-	 * @param [candidates.sg] message in `zh-sg`
-	 * @param [candidates.mo] message in `zh-mo`
-	 * @param [candidates.my] message in `zh-my`
-	 * @param [candidates.other] message in non-zh locales
-	 * @param [options]
-	 * @param [options.locale] locale, default to `wgUserLanguage`
+	 * @param candidates candidate messages
+	 * @param options
+	 * @param options.locale locale, default to `wgUserLanguage`
 	 * @return selected string
 	 */
 	localize: ( candidates: string | Candidates, options?: { locale?: string } ) => string,
@@ -74,17 +64,7 @@ HanAssist.localize(
 	```
 	HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } ); // => 一天一苹果，医生远离我。
 	```
-	 * @param candidates
-	 * @param [candidates.zh] message in `zh`
-	 * @param [candidates.hans] message in `zh-hans`
-	 * @param [candidates.hant] message in `zh-hant`
-	 * @param [candidates.cn] message in `zh-cn`
-	 * @param [candidates.tw] message in `zh-tw`
-	 * @param [candidates.hk] message in `zh-hk`
-	 * @param [candidates.sg] message in `zh-sg`
-	 * @param [candidates.mo] message in `zh-mo`
-	 * @param [candidates.my] message in `zh-my`
-	 * @param [candidates.other] message in non-zh locales
+	 * @param candidates candidate messages
 	 * @return message in the current user variant
 	 */
 	vary: ( candidates: string | Candidates ) => string
