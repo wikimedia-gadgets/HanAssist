@@ -3,7 +3,7 @@
  * For license information please see LICENSE.
  */
 
-import { raiseInvalidParamError } from './utils';
+import { safelyToString } from './utils';
 
 type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
 
@@ -43,7 +43,7 @@ function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string
 		}
 	}
 
-	throw new Error( mw.msg( 'ha-err', mw.msg( 'ha-no-msg' ) ) );
+	throw new Error( 'Cannot find message!' );
 }
 
 /**
@@ -57,18 +57,22 @@ function safelyElect( candidates: string | Candidates, locale: string ): string 
 	if ( typeof candidates === 'string' ) {
 		return candidates;
 	}
+
 	if ( typeof locale !== 'string' ) {
-		raiseInvalidParamError( 'locale', 'string' );
-	}
-	if ( !$.isPlainObject( candidates ) ) {
-		raiseInvalidParamError( 'candidates', 'Candidates' );
+		locale = safelyToString( locale );
 	}
 
-	const winner = elect( candidates, locale );
-	if ( typeof winner !== 'string' ) {
-		raiseInvalidParamError( 'candidates', 'Candidates' );
+	if ( !$.isPlainObject( candidates ) ) {
+		return safelyToString( candidates );
 	}
-	return winner;
+
+	try {
+		const winner = elect( candidates, locale );
+		return safelyToString( winner );
+	}
+	catch {
+		return '';
+	}
 }
 
 export { elect, Candidates, safelyElect };

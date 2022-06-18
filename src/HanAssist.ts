@@ -4,7 +4,7 @@
  */
 
 import { Candidates, safelyElect } from './elect';
-import { raiseInvalidParamError } from './utils';
+import { safelyToString } from './utils';
 
 /**
  * Helper to handle Chinese variant conversions.
@@ -74,10 +74,10 @@ HanAssist.localize(
 const HanAssist: HanAssistStatic = {
 	parse( rawMsg, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
 		if ( typeof locale !== 'string' ) {
-			raiseInvalidParamError( 'locale', 'string' );
+			locale = safelyToString( locale );
 		}
 		if ( !$.isPlainObject( rawMsg ) || $.isEmptyObject( rawMsg ) ) {
-			raiseInvalidParamError( 'rawMsg', 'RawMessages' );
+			return Object.create( null );
 		}
 
 		const transpiledMsg: Record<string, string> = Object.create( null );
