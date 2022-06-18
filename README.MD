@@ -38,17 +38,17 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 ## 用法
 ``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其内容如下所示：
 ```typescript
-{
-	zh: string, // 中文（不转换）消息
-	hans: string, // 中文（简体）消息
-	hant: string, // 中文（繁體）消息
-	cn: string, // 大陆简体消息
-	tw: string, // 台灣正體消息
-	hk: string, // 香港繁體消息
-	mo: string, // 澳門繁體消息
-	my: string, // 大马简体消息
-	sg: string, // 新加坡简体消息
-	other: string // 非中文语言（如英语）消息
+interface Candidates {
+	zh?: string, // 中文（不转换）消息
+	hans?: string, // 简体中文消息
+	hant?: string, // 繁體中文消息
+	cn?: string, // 大陆简体消息
+	tw?: string, // 台灣正體消息
+	hk?: string, // 香港繁體消息
+	mo?: string, // 澳門繁體消息
+	my?: string, // 大马简体消息
+	sg?: string, // 新加坡简体消息
+	other?: string // 非中文语言（如英语）消息
 }
 ```
 
