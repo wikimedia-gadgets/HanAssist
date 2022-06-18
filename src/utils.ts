@@ -9,7 +9,7 @@
  * @param val value to convert
  * @return string
  */
-function safelyToString( val: unknown ) {
+function safelyToString( val: unknown ): string {
 	try {
 		if ( typeof val === 'undefined' || val === null ) {
 			return '';

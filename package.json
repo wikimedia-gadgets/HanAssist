@@ -12,7 +12,7 @@
 		"compile:tsc": "tsc -p ./",
 		"compile:webpack-prod": "webpack -c ./webpack.config.js --mode production",
 		"compile:webpack-dev": "webpack -c ./webpack.config.js --mode development",
-		"lint": "eslint -c .eslintrc.yml --ext .ts ./src",
+		"lint": "tsc -p ./ --noemit",
 		"doc": "typedoc"
 	},
 	"devDependencies": {
