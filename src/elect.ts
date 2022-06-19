@@ -7,11 +7,7 @@ import { safelyToString } from './utils';
 
 type CandidateKeys = typeof DEFAULT_FALLBACK[ number ];
 
-type RequireAtLeastOne<T> = {
-	[ K in keyof T ]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<keyof T, K>>>;
-}[ keyof T ];
-
-type Candidates = RequireAtLeastOne<{ [ K in CandidateKeys ]?: string }>;
+type Candidates = Partial<Record<CandidateKeys, string>>;
 
 const DEFAULT_FALLBACK = [ 'other', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my' ] as const,
 	FALLBACK_TABLE: Record<string, readonly CandidateKeys[]> = {
@@ -56,10 +52,6 @@ function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string
 function safelyElect( candidates: string | Candidates, locale: string ): string {
 	if ( typeof candidates === 'string' ) {
 		return candidates;
-	}
-
-	if ( typeof locale !== 'string' ) {
-		locale = safelyToString( locale );
 	}
 
 	if ( !$.isPlainObject( candidates ) ) {

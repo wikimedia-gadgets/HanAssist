@@ -6,8 +6,7 @@
  * |   Please discuss changes on the talk page or on [[WP:VPT]] before editing.  |
  * |_____________________________________________________________________________|
  *
- * HanAssist - Utilities to ease Chinese variant handling in user scripts and gadgets.
- * Built from source code at GitHub repository [https://github.com/diskdance/HanAssist].
+ * Built from source code at HanAssist GitHub repository [https://github.com/diskdance/HanAssist].
  * All changes should be made in the repository, otherwise they will be lost.
  *
  * To update this script from GitHub, you must have a local repository set up. Then

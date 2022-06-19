@@ -5,7 +5,8 @@ const { resolve } = require( 'path' ),
 	TerserPlugin = require( 'terser-webpack-plugin' ),
 	{ readFileSync } = require( 'fs' );
 
-const IS_ES5 = true;
+const IS_ES5 = require( './tsconfig.json' )
+	.compilerOptions.target.toLowerCase() === 'es5';
 
 const terser = new TerserPlugin( {
 	extractComments: false,
