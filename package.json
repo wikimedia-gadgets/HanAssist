@@ -16,7 +16,7 @@
 		"doc": "typedoc"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.26.0",
+		"@typescript-eslint/eslint-plugin": "^5.28.0",
 		"@typescript-eslint/parser": "^5.26.0",
 		"eslint": "^8.17.0",
 		"eslint-config-wikimedia": "^0.22.1",
