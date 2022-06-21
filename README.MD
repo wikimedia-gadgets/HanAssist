@@ -31,9 +31,8 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 
 1. 仅占用``HanAssist``一个全局名称，提供原小工具的全部功能；
 2. 采用命名参数语法，显著提升代码可读性；
-3. 兼容旧版``wgULS``、``wgUVS``语法，方便迁移；
-4. 完善的代码文档及类型定义；
-5. 支持批量转译消息，在代码大量依赖中文变体消息时可极大减少代码复杂程度。
+3. 完善的代码文档及类型定义；
+4. 支持批量转译消息，在代码大量依赖中文变体消息时可极大减少代码复杂程度。
 
 ## 用法
 ``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其原型如下所示：
@@ -55,14 +54,12 @@ interface Candidates {
 两者的用法：
 ```javascript
 // 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
-HanAssist.localize( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
 HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 
 // 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' );
 HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } );
 
 // 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
-HanAssist.vary( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
 HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 
 // 配合占位符号使用
