@@ -19,7 +19,7 @@
 	"devDependencies": {
 		"@types/jest": "^28.1.2",
 		"@typescript-eslint/eslint-plugin": "^5.26.0",
-		"@typescript-eslint/parser": "^5.26.0",
+		"@typescript-eslint/parser": "^5.29.0",
 		"eslint": "^8.17.0",
 		"eslint-config-wikimedia": "^0.22.1",
 		"jest": "^28.1.1",
