@@ -1,4 +1,4 @@
-import { HanAssist } from '../src/HanAssist';
+import { HanAssist } from '../lib/HanAssist';
 import { getter } from './mediawiki-mock';
 
 /**

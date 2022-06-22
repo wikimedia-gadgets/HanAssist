@@ -8,14 +8,14 @@
         ],
         "sourceMap": true,
         "outDir": "./dist/",
-        "rootDir": "./src/",
+        "rootDir": "./lib/",
         "strict": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true
     },
     "include": [
-        "./src/**/*.ts",
+        "./lib/**/*.ts",
         "./node_modules/types-mediawiki"
     ],
     "exclude": []
