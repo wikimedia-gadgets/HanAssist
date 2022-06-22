@@ -35,7 +35,7 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 4. 支持批量转译消息，在代码大量依赖中文变体消息时可极大减少代码复杂程度。
 
 ## 用法
-``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其原型如下所示：
+``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其原型大致如下所示：
 ```typescript
 interface Candidates {
 	zh?: string, // 中文（不转换）消息
@@ -70,7 +70,7 @@ mw.format(
 ); // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
 ```
 
-批量转译消息：
+### 批量转译消息
 ```javascript
 HanAssist.parse( {
 	'article': { hans: '条目', hant: '條目' },
@@ -111,6 +111,9 @@ mw.msg( 'categories' ); // => 界面语言为简中：“分类”；繁中：�
 mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Apple的页面”；繁中：“搜尋包含Apple的頁面”
 // 其他用法详见 MediaWiki 文档
 ```
+
+### 使用类型定义（``.d.ts``）文件
+如果您的小工具使用 TypeScript 编写，那么，您可以将根目录中的 [``HanAssist.d.ts``](./HanAssist.d.ts) 文件复制至您的项目目录中。这样，您就可以获得完整的编译时类型检查。
 
 ## 局限
 在软件领域，[没有银弹](https://zh.wikipedia.org/wiki/%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9)，因此 HanAssist 也并非完美。在一些使用场景下，您应该使用其他更合适的工具而非 HanAssist。
