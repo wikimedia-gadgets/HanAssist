@@ -8,19 +8,9 @@ const { resolve } = require( 'path' ),
 const IS_ES5 = require( './tsconfig.json' )
 	.compilerOptions.target.toLowerCase() === 'es5';
 
-const terser = new TerserPlugin( {
-	extractComments: false,
-	terserOptions: {
-		format: {
-			comments: /((^\*!|nowiki))/i // Preserve banners & nowiki guards
-		},
-		ecma: IS_ES5 ? 5 : undefined
-	},
-} );
-
 /**@type {import('webpack').Configuration}*/
 const webpackConfig = {
-	entry: './src/index.ts',
+	entry: './lib/index.ts',
 	resolve: {
 		extensions: [ '.ts', '.js' ]
 	},
@@ -47,13 +37,26 @@ const webpackConfig = {
 		},
 	},
 	plugins: [
-		new BannerPlugin( { banner: readFileSync( './gadget-prepend.js' ).toString(), raw: true } ),
-		new BannerPlugin( { banner: readFileSync( './gadget-append.js' ).toString(), footer: true, raw: true } )
+		new BannerPlugin( {
+			banner: readFileSync( './gadget-prepend.js' ).toString(), raw: true
+		} ),
+		new BannerPlugin( {
+			banner: readFileSync( './gadget-append.js' ).toString(), footer: true, raw: true
+		} )
 	],
 	optimization: {
-		minimizer: [ terser ]
-	},
-	devtool: 'source-map'
+		minimizer: [
+			new TerserPlugin( {
+				extractComments: false,
+				terserOptions: {
+					format: {
+						comments: /((^\*!|nowiki))/i // Preserve banners & nowiki guards
+					},
+					ecma: IS_ES5 ? 5 : undefined
+				},
+			} )
+		]
+	}
 }
 
 module.exports = webpackConfig;
