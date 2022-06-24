@@ -1,1 +1,1 @@
-HanAssist[ResourceLoader|dependencies=mediawiki.user|hidden|targets=desktop,mobile]|HanAssist.js
+HanAssist[ResourceLoader|hidden|targets=desktop,mobile]|HanAssist.js
