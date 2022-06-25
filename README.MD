@@ -3,20 +3,20 @@
 
 HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
 
-本程序的目标是取代``wgULS()``和``wgUVS()``小工具。
+本程序的目标是取代``wgULS()``和``wgUVS()``。
 
 ```javascript
-HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+mw.libs.HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 // => 界面语言为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+mw.libs.HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 // => 页面变体为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 ```
 
 ## 为什么使用 HanAssist？
 ``wgULS()``和``wgUVS()``几乎是中文维基百科每个用户脚本和小工具都要使用到的功能。它们极大方便了中文变体消息的处理，但随着 JavaScript 的发展，它们的问题也逐渐显现：
 
-1. 仍然使用旧式的``wgXXX``类名称，污染全局空间。现今 MediaWiki 中的此类变量全部通过``mw.config.get()``获取，但这两个函数并未也无法跟进。
+1. 仍然使用旧式的``wgXXX``类名称，污染全局空间。现今 MediaWiki 中的此类变量全部通过``mw.config.get``获取，但这两个函数并未也无法跟进。
 2. 使用意义不明的缩写，影响代码可读性。
 3. 参数列表过长，影响阅读。设计良好的 JavaScript 函数[最多仅应包含两个参数](https://github.com/ryanmcdermott/clean-code-javascript#function-arguments-2-or-fewer-ideally)。
    设想一下，如果像这样调用``wgULS()``：
@@ -29,13 +29,14 @@ HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一
 
 为了解决这些问题，我们制作了 HanAssist。它具有如下优点：
 
-1. 仅占用``HanAssist``一个全局名称，提供原小工具的全部功能；
+1. 不占用全局空间，通过``mw.libs.HanAssist``一个对象提供原小工具的全部功能；
 2. 采用命名参数语法，显著提升代码可读性；
 3. 完善的代码文档及类型定义；
 4. 支持批量转译消息，在代码大量依赖中文变体消息时可极大减少代码复杂程度。
 
 ## 用法
-``HanAssist.localize()``与``HanAssist.vary()``接受一种称作“候选消息列表”的对象，其原型大致如下所示：
+### ``HanAssist.localize()``和``HanAssist.vary()``
+这两个函数分别替代``wgULS()``和``wgUVS()``。它们的第一个参数为一个原型大致如下所示的对象：
 ```typescript
 interface Candidates {
 	zh?: string, // 中文（不转换）消息
@@ -51,65 +52,79 @@ interface Candidates {
 }
 ```
 
-两者的用法：
+两者的用法则如下所示：
 ```javascript
-// 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
-HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+// 可使用 IIFE 简化语法
+( function ( HanAssist ) {
+	// 等同于 wgULS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
+	HanAssist.localize( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+	// => 界面语言为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 
-// 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' );
-HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } );
+	// 等同于 wgULS( undefined, undefined, 'IP用户', 'IP使用者', 'IP用戶' );
+	HanAssist.localize( { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' } );
+	// => 界面语言为大陆简体：“一天一苹果，医生远离我。”；台灣正體：“一天一蘋果，醫生遠離我。”；香港繁體：“一天一蘋果，醫生遠離我。”
+	// 其他变体下则根据 fallback 链选择相应的消息
 
-// 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
-HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+	// 等同于 wgUVS( '一天一苹果，医生远离我。', '一天一蘋果，醫生遠離我。' );
+	HanAssist.vary( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
+	// => 页面变体为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
 
-// 配合占位符号使用
-mw.format(
-    HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
-    '123456',
-    'Apple'
-); // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
+	// 配合占位符号使用。有关 mw.format 的用法详见 MediaWiki 文档
+	mw.format(
+	    HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
+	    '123456',
+	    'Apple'
+	); // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
+}( mw.libs.HanAssist ) );
 ```
 
-### 批量转译消息
+### ``HanAssist.parse()``
+这是一个提供批量转译消息功能的函数。
+
 ```javascript
-HanAssist.parse( {
-	'article': { hans: '条目', hant: '條目' },
-	'category': { hans: '分类', hant: '分類' },
-	'categories': { hans: '分类', hant: '分類' },
-	'image': { hans: '文件', hant: '檔案' },
-	'images': { hans: '文件', hant: '檔案' },
-	'minute': '分',
-	'minutes': '分',
-	'second': '秒',
-	'seconds': '秒',
-	'week': '周',
-	'weeks': '周',
-	'search': { hans: '搜索', hant: '搜尋' },
-	'SearchHint': { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
-	'web': { hans: '站点', hant: '站點' },
-} ); // => { 'article': '条目', 'category': '分类', 'categories': '分类', ... }
+mw.libs.HanAssist.parse( {
+		'article': { hans: '条目', hant: '條目' },
+		'category': { hans: '分类', hant: '分類' },
+		'categories': { hans: '分类', hant: '分類' },
+		'image': { hans: '文件', hant: '檔案' },
+		'images': { hans: '文件', hant: '檔案' },
+		'minute': '分',
+		'minutes': '分',
+		'second': '秒',
+		'seconds': '秒',
+		'week': '周',
+		'weeks': '周',
+		'search': { hans: '搜索', hant: '搜尋' },
+		'SearchHint': { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
+		'web': { hans: '站点', hant: '站點' },
+	} ); // => { 'article': '条目', 'category': '分类', 'categories': '分类', ... }
+```
 
-// 推荐配合 mw.messages 使用
-mw.messages.set( HanAssist.parse( {
-	'article': { hans: '条目', hant: '條目' },
-	'category': { hans: '分类', hant: '分類' },
-	'categories': { hans: '分类', hant: '分類' },
-	'image': { hans: '文件', hant: '檔案' },
-	'images': { hans: '文件', hant: '檔案' },
-	'minute': '分',
-	'minutes': '分',
-	'second': '秒',
-	'seconds': '秒',
-	'week': '周',
-	'weeks': '周',
-	'search': { hans: '搜索', hant: '搜尋' },
-	'SearchHint': { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
-	'web': { hans: '站点', hant: '站點' },
-} ) );
+大多数情况下，推荐配合``mw.messages``使用。
 
-mw.msg( 'categories' ); // => 界面语言为简中：“分类”；繁中：“分類”
-mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Apple的页面”；繁中：“搜尋包含Apple的頁面”
-// 其他用法详见 MediaWiki 文档
+```javascript
+( ( HanAssist ) => {
+	mw.messages.set( HanAssist.parse( {
+		'article': { hans: '条目', hant: '條目' },
+		'category': { hans: '分类', hant: '分類' },
+		'categories': { hans: '分类', hant: '分類' },
+		'image': { hans: '文件', hant: '檔案' },
+		'images': { hans: '文件', hant: '檔案' },
+		'minute': '分',
+		'minutes': '分',
+		'second': '秒',
+		'seconds': '秒',
+		'week': '周',
+		'weeks': '周',
+		'search': { hans: '搜索', hant: '搜尋' },
+		'SearchHint': { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
+		'web': { hans: '站点', hant: '站點' },
+	} ) );
+
+	mw.msg( 'categories' ); // => 界面语言为简中：“分类”；繁中：“分類”
+	mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Apple的页面”；繁中：“搜尋包含Apple的頁面”
+	// 其他用法详见 MediaWiki 文档
+} )( mw.libs.HanAssist );
 ```
 
 ### 使用类型定义（``.d.ts``）文件

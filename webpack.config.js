@@ -26,7 +26,7 @@ const webpackConfig = {
 	output: {
 		clean: true,
 		library: {
-			name: 'HanAssist',
+			name: [ 'mw', 'libs', 'HanAssist' ],
 			type: 'window',
 			export: 'HanAssist'
 		},

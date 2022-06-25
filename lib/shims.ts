@@ -24,10 +24,10 @@ function generateLegacyHelper( configName: 'wgUserLanguage' | 'wgUserVariant' ) 
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function shim( name: string, func: ( ...args: any[] ) => unknown, replacement: string ) {
-	mw.log.deprecate( window, name, func, `Use ${replacement} instead.` );
+function shim( name: string, func: ( ...args: any[] ) => unknown ) {
+	mw.log.deprecate( window, name, func, `Use mw.libs.HanAssist instead.` );
 }
 
-shim( 'wgULS', generateLegacyHelper( 'wgUserLanguage' ), 'HanAssist.localize' );
-shim( 'wgUVS', generateLegacyHelper( 'wgUserVariant' ), 'HanAssist.vary' );
-shim( 'wgUXS', legacyUXS, 'HanAssist.localize' );
+shim( 'wgULS', generateLegacyHelper( 'wgUserLanguage' ) );
+shim( 'wgUVS', generateLegacyHelper( 'wgUserVariant' ) );
+shim( 'wgUXS', legacyUXS );
