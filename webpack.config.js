@@ -5,7 +5,7 @@ const { resolve } = require( 'path' ),
 	TerserPlugin = require( 'terser-webpack-plugin' ),
 	{ readFileSync } = require( 'fs' );
 
-const IS_ES5 = require( './tsconfig.json' )
+const isES5 = require( './tsconfig.json' )
 	.compilerOptions.target.toLowerCase() === 'es5';
 
 /**@type {import('webpack').Configuration}*/
@@ -33,7 +33,7 @@ const webpackConfig = {
 		path: resolve( './dist' ),
 		filename: 'index.js',
 		environment: {
-			arrowFunction: !IS_ES5
+			arrowFunction: !isES5
 		},
 	},
 	plugins: [
@@ -52,7 +52,7 @@ const webpackConfig = {
 					format: {
 						comments: /((^\*!|nowiki))/i // Preserve banners & nowiki guards
 					},
-					ecma: IS_ES5 ? 5 : undefined
+					ecma: isES5 ? 5 : undefined
 				},
 			} )
 		]
