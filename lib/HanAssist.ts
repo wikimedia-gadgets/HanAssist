@@ -4,6 +4,7 @@
  */
 
 import { Candidates, safelyElect } from './elect';
+import { assertPlainObject, safelyToString } from './utils';
 
 /**
  * Helper to handle Chinese variant conversions.
@@ -53,7 +54,7 @@ HanAssist.localize(
 	 * @param options.locale locale, default to `wgUserLanguage`
 	 * @return selected string
 	 */
-	localize: ( candidates: string | Candidates, options?: { locale?: string } ) => string,
+	localize: ( candidates: Candidates, options?: { locale?: string } ) => string,
 
 	/**
 	 * Return the string, if any, in the current user variant.
@@ -66,9 +67,13 @@ HanAssist.localize(
 	 * @param candidates candidate messages
 	 * @return message in the current user variant
 	 */
-	vary: ( candidates: string | Candidates ) => string
+	vary: ( candidates: Candidates ) => string
 }
 
+function preprocess( candidates: Candidates, locale: string ): string {
+	assertPlainObject( candidates );
+	return safelyElect( candidates, locale );
+}
 
 const HanAssist: HanAssistStatic = {
 	parse( rawMsg, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
@@ -78,17 +83,22 @@ const HanAssist: HanAssistStatic = {
 
 		const transpiledMsg: Record<string, string> = Object.create( null );
 		for ( const key in rawMsg ) {
-			transpiledMsg[ key ] = safelyElect( rawMsg[ key ], locale );
+			const entry = rawMsg[ key ];
+			if ( $.isPlainObject( entry ) ) {
+				transpiledMsg[ key ] = safelyElect( entry as Candidates, locale );
+			} else {
+				transpiledMsg[ key ] = safelyToString( entry );
+			}
 		}
 		return transpiledMsg;
 	},
 
 	localize( candidates, { locale = mw.config.get( 'wgUserLanguage' ) } = {} ) {
-		return safelyElect( candidates, locale );
+		return preprocess( candidates, locale );
 	},
 
 	vary( candidates ) {
-		return safelyElect(
+		return preprocess(
 			candidates,
 			mw.config.get( 'wgUserVariant' ) || mw.user.options.get( 'variant' )
 		);

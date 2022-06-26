@@ -32,7 +32,7 @@ describe( 'HanAssist.vary', () => {
 			{ locale: 'zh-tw', expected: 'tw' },
 			{ locale: 'en', expected: 'other' },
 			{ locale: 'fr', expected: 'other' }
-		] )( 'return correct string in $locale', ( { locale, expected } ) => {
+		] )( 'in $locale', ( { locale, expected } ) => {
 			getter.mockImplementation( ( val ) => {
 				if ( val === 'wgUserVariant' ) {
 					return locale;
@@ -59,7 +59,7 @@ describe( 'HanAssist.vary', () => {
 			{ locale: 'zh-tw', expected: '一天一蘋果，醫生遠離我。' },
 			{ locale: 'en', expected: '一天一苹果，医生远离我。' },
 			{ locale: 'fr', expected: '一天一苹果，医生远离我。' }
-		] )( 'return correct string in $locale', ( { locale, expected } ) => {
+		] )( 'in $locale', ( { locale, expected } ) => {
 			getter.mockImplementation( ( val ) => {
 				if ( val === 'wgUserVariant' ) {
 					return locale;
@@ -70,7 +70,6 @@ describe( 'HanAssist.vary', () => {
 			expect( HanAssist.vary( CANDIDATES ) ).toBe( expected );
 		} );
 	} );
-
 
 	describe( 'handles partial candidates', () => {
 		const CANDIDATES = { cn: 'IP用户', tw: 'IP使用者', hk: 'IP用戶' };
@@ -87,7 +86,7 @@ describe( 'HanAssist.vary', () => {
 			{ locale: 'zh-tw', expected: 'IP使用者' },
 			{ locale: 'en', expected: 'IP用户' },
 			{ locale: 'fr', expected: 'IP用户' }
-		] )( 'return correct string in $locale', ( { locale, expected } ) => {
+		] )( 'in $locale', ( { locale, expected } ) => {
 			getter.mockImplementation( ( val ) => {
 				if ( val === 'wgUserVariant' ) {
 					return locale;
@@ -125,7 +124,7 @@ describe( 'HanAssist.vary', () => {
 			{ locale: 'zh-tw', expected: 'tw' },
 			{ locale: 'en', expected: 'other' },
 			{ locale: 'fr', expected: 'other' }
-		] )( 'return correct string in $locale', ( { locale, expected } ) => {
+		] )( 'in $locale', ( { locale, expected } ) => {
 			getter.mockImplementation( ( val ) => {
 				// mw.user.options.get( 'variant' )
 				if ( val === 'variant' ) {
@@ -136,5 +135,10 @@ describe( 'HanAssist.vary', () => {
 
 			expect( HanAssist.vary( CANDIDATES ) ).toBe( expected );
 		} );
+	} );
+
+	test( 'throws when first parameter is not object', () => {
+		/// @ts-expect-error For testing
+		expect( () => HanAssist.vary( 1 ) ).toThrow( TypeError );
 	} );
 } );

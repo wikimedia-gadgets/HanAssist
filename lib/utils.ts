@@ -20,4 +20,10 @@ function safelyToString( val: unknown ): string {
 	}
 }
 
-export { safelyToString };
+function assertPlainObject( val: unknown ): asserts val is Record<string, string> {
+	if ( !$.isPlainObject( val ) ) {
+		throw new TypeError( 'Require an object!' );
+	}
+}
+
+export { safelyToString, assertPlainObject };

@@ -43,21 +43,13 @@ function elect<T>( candidates: Partial<Record<CandidateKeys, T>>, locale: string
 }
 
 /**
- * Check the type of `candidates` at runtime and call `elect()` respectively.
+ * Guard function for `elect()`.
  * @private
  * @param candidates candidates
  * @param locale locale
  * @return selected entry
  */
-function safelyElect( candidates: string | Candidates, locale: string ): string {
-	if ( typeof candidates === 'string' ) {
-		return candidates;
-	}
-
-	if ( !$.isPlainObject( candidates ) ) {
-		return safelyToString( candidates );
-	}
-
+function safelyElect( candidates: Candidates, locale: string ): string {
 	try {
 		const winner = elect( candidates, locale );
 		return safelyToString( winner );

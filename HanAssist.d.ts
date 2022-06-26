@@ -67,7 +67,7 @@ declare namespace mw.libs {
 		 * @param options.locale locale, default to `wgUserLanguage`
 		 * @return selected string
 		 */
-		localize: ( candidates: string | Candidates, options?: { locale?: string } ) => string,
+		localize: ( candidates: Candidates, options?: { locale?: string } ) => string,
 
 		/**
 		 * Return the string, if any, in the current user variant.
@@ -80,7 +80,7 @@ declare namespace mw.libs {
 		 * @param candidates candidate messages
 		 * @return message in the current user variant
 		 */
-		vary: ( candidates: string | Candidates ) => string
+		vary: ( candidates: Candidates ) => string
 	}
 
 	const HanAssist: HanAssistStatic;
