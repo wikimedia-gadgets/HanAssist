@@ -137,6 +137,51 @@ describe( 'HanAssist.vary', () => {
 		} );
 	} );
 
+	describe( 'returns string when receiving malformed candidates', () => {
+		const CANDIDATES = {
+			zh: 123,
+			hans: Symbol(),
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			hant: () => { },
+			cn: {
+				toString() {
+					return 123;
+				}
+			},
+			tw: Object.create( null ),
+			hk: Function,
+			mo: {
+				valueOf() {
+					return 123;
+				}
+			},
+			my: true,
+			sg: BigInt( 123 )
+		};
+
+		test.each( [
+			{ locale: 'zh', expected: '123' },
+			{ locale: 'zh-hans', expected: 'Symbol()' },
+			{ locale: 'zh-hant', expected: 'function () { }' },
+			{ locale: 'zh-cn', expected: '123' },
+			{ locale: 'zh-sg', expected: '123' },
+			{ locale: 'zh-my', expected: 'true' },
+			{ locale: 'zh-mo', expected: '[object Object]' },
+			{ locale: 'zh-hk', expected: 'function Function() { [native code] }' },
+			{ locale: 'zh-tw', expected: '[object Object]' },
+		] )( 'in $locale', ( { locale, expected } ) => {
+			getter.mockImplementation( ( val ) => {
+				if ( val === 'wgUserVariant' ) {
+					return locale;
+				}
+				return null;
+			} );
+
+			/// @ts-expect-error For testing
+			expect( HanAssist.vary( CANDIDATES ) ).toBe( expected );
+		} );
+	} );
+
 	test( 'throws when first parameter is not object', () => {
 		/// @ts-expect-error For testing
 		expect( () => HanAssist.vary( 1 ) ).toThrow( TypeError );

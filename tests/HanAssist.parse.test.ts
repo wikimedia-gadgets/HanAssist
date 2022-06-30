@@ -51,4 +51,13 @@ describe( 'HanAssist.parse', () => {
 			expect( HanAssist.parse( RAW_MSG ) ).toStrictEqual( expected );
 		} );
 	} );
+
+	test( 'return empty object when receiving one', () => {
+		expect( HanAssist.parse( {} ) ).toStrictEqual( stripePrototype( {} ) );
+	} );
+
+	test( 'throws when receiving a non-object', () => {
+		/// @ts-expect-error For testing
+		expect( () => HanAssist.parse( 1 ) ).toThrow( TypeError );
+	} );
 } );
