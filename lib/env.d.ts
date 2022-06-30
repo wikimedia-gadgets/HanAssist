@@ -9,4 +9,6 @@ export declare global {
 	namespace mw {
 		const messages: mw.Map<{ [ key: string ]: string }>;
 	}
+
+	const __SHIM_UXS__: boolean;
 }

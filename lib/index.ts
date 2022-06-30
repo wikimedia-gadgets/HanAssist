@@ -5,6 +5,8 @@
 
 'use strict';
 
-import './shims';
+if ( __SHIM_UXS__ ) {
+	require( './shims' );
+}
 
 export * from './HanAssist';

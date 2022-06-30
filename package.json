@@ -8,11 +8,11 @@
 	"main": "./dist/index.js",
 	"types": "HanAssist.d.ts",
 	"scripts": {
-		"compile": "yarn run compile:webpack-prod",
-		"compile:tsc": "tsc -p ./",
-		"compile:webpack-prod": "webpack -c ./webpack.config.js --mode production",
-		"compile:webpack-dev": "webpack -c ./webpack.config.js --mode development",
-		"lint": "tsc -p ./ --noemit",
+		"compile": "yarn run compile:prod",
+		"compile:prod": "webpack -c ./webpack.config.js --mode production",
+		"compile:prod:no-shim": "yarn run compile:prod --env shimuxs=false",
+		"compile:dev": "webpack -c ./webpack.config.js --mode development",
+		"lint": "tsc -p ./ --noemit && eslint \"**/*.js\"",
 		"test": "jest",
 		"doc": "typedoc"
 	},
