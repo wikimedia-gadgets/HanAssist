@@ -8,9 +8,10 @@
 	"main": "./dist/index.js",
 	"types": "HanAssist.d.ts",
 	"scripts": {
-		"compile": "yarn run compile:prod",
+		"preinstall": "npx only-allow pnpm",
+		"compile": "pnpm run compile:prod",
 		"compile:prod": "webpack -c ./webpack.config.js --mode production",
-		"compile:prod:no-shim": "yarn run compile:prod --env shimuxs=false",
+		"compile:prod:no-shim": "pnpm run compile:prod --env shimuxs=false",
 		"compile:dev": "webpack -c ./webpack.config.js --mode development",
 		"lint": "tsc -p ./ --noemit && eslint \"**/*.js\"",
 		"test": "jest",
