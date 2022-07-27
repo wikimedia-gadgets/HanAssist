@@ -71,9 +71,9 @@ interface Candidates {
 
 	// 配合占位符号使用。有关 mw.format 的用法详见 MediaWiki 文档
 	mw.format(
-	    HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
-	    '123456',
-	    'Apple'
+		HanAssist.localize( { hans: '页面$2的修订版本$1', hant: '頁面$2的修訂版本$1' } ),
+		'123456',
+		'Apple'
 	); // => 界面语言为简中：“页面Apple的修订版本123456”；繁中：“頁面Apple的修訂版本123456”
 }( mw.libs.HanAssist ) );
 ```
