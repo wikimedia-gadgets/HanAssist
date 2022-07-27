@@ -1,22 +1,22 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "es2020",
-        "lib": [
-            "es5",
-            "DOM"
-        ],
-        "sourceMap": true,
-        "outDir": "./dist/",
-        "rootDir": "./lib/",
-        "strict": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
-    },
-    "include": [
-        "./lib/**/*.ts",
-        "./node_modules/types-mediawiki"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2020",
+    "lib": [
+      "es5",
+      "DOM"
     ],
-    "exclude": []
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "rootDir": "./lib/",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "./lib/**/*.ts",
+    "./node_modules/types-mediawiki"
+  ],
+  "exclude": []
 }

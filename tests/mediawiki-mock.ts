@@ -2,15 +2,15 @@
  * Mock mw.config.get & mw.user.options.get.
  */
 
-const getter = jest.fn<unknown, [ string ]>( () => 'zh' ),
-	mockMW = new Proxy( {}, {
-		get( _, prop, receiver ) {
-			if ( prop === 'get' ) {
-				return getter;
-			}
+const getter = jest.fn<unknown, [string]>(() => 'zh');
+const mockMW = new Proxy({}, {
+  get(_, prop, receiver) {
+    if (prop === 'get') {
+      return getter;
+    }
 
-			return receiver;
-		}
-	} );
+    return receiver;
+  },
+});
 
 export { getter, mockMW };

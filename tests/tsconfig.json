@@ -1,20 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "es2020",
-        "module": "es2020",
-        "lib": [
-            "es2020",
-            "DOM"
-        ],
-        "noEmit": true,
-        "strict": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
-    },
-    "include": [
-        "*.ts",
-        "../node_modules/types-mediawiki"
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "DOM"
     ],
-    "exclude": []
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+  },
+  "include": [
+    "*.ts",
+    "../node_modules/types-mediawiki"
+  ],
+  "exclude": []
 }
