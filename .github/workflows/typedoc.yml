@@ -17,11 +17,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16'
-          cache: 'yarn'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.6.0
       - name: Install & Generate TypeDoc
         run: |
-          yarn install --frozen-lockfile
-          yarn run typedoc
+          pnpm install --frozen-lockfile
+          pnpm run typedoc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
