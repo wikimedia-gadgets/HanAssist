@@ -1,7 +1,7 @@
 # Contributing
 ## Prerequisites
 * `Node.js` v16
-* `yarn`
+* `pnpm`
 * `typescript` >= 4.3.5
 * Visual Studio Code (Recommended)
 
@@ -9,9 +9,9 @@
 At the root of the repo, run:
 
 ```sh
-yarn
-yarn run lint
-yarn run compile
+pnpm
+pnpm run lint
+pnpm run compile
 ```
 
 View generated files at `./dist/`.
