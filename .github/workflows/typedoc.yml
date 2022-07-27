@@ -24,7 +24,7 @@ jobs:
       - name: Install & Generate TypeDoc
         run: |
           pnpm install --frozen-lockfile
-          pnpm run typedoc
+          pnpm run doc
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
