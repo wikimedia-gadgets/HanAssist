@@ -29,22 +29,22 @@ describe('HanAssist.parse', () => {
         sg: 'sg',
         other: 'other',
       },
-      'lovely-str': 'I\'m a lovely string',
+      'lovely-str': "I'm a lovely string",
       SearchHint: { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
     };
 
     test.each([
-      { locale: 'zh', expected: stripePrototype({ locale: 'zh', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'zh-hans', expected: stripePrototype({ locale: 'hans', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'zh-hant', expected: stripePrototype({ locale: 'hant', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜尋包含$1的頁面' }) },
-      { locale: 'zh-cn', expected: stripePrototype({ locale: 'cn', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'zh-sg', expected: stripePrototype({ locale: 'sg', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'zh-my', expected: stripePrototype({ locale: 'my', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'zh-mo', expected: stripePrototype({ locale: 'mo', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜尋包含$1的頁面' }) },
-      { locale: 'zh-hk', expected: stripePrototype({ locale: 'hk', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜尋包含$1的頁面' }) },
-      { locale: 'zh-tw', expected: stripePrototype({ locale: 'tw', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜尋包含$1的頁面' }) },
-      { locale: 'en', expected: stripePrototype({ locale: 'other', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
-      { locale: 'fr', expected: stripePrototype({ locale: 'other', 'lovely-str': 'I\'m a lovely string', SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh', expected: stripePrototype({ locale: 'zh', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh-hans', expected: stripePrototype({ locale: 'hans', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh-hant', expected: stripePrototype({ locale: 'hant', 'lovely-str': "I'm a lovely string", SearchHint: '搜尋包含$1的頁面' }) },
+      { locale: 'zh-cn', expected: stripePrototype({ locale: 'cn', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh-sg', expected: stripePrototype({ locale: 'sg', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh-my', expected: stripePrototype({ locale: 'my', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'zh-mo', expected: stripePrototype({ locale: 'mo', 'lovely-str': "I'm a lovely string", SearchHint: '搜尋包含$1的頁面' }) },
+      { locale: 'zh-hk', expected: stripePrototype({ locale: 'hk', 'lovely-str': "I'm a lovely string", SearchHint: '搜尋包含$1的頁面' }) },
+      { locale: 'zh-tw', expected: stripePrototype({ locale: 'tw', 'lovely-str': "I'm a lovely string", SearchHint: '搜尋包含$1的頁面' }) },
+      { locale: 'en', expected: stripePrototype({ locale: 'other', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
+      { locale: 'fr', expected: stripePrototype({ locale: 'other', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' }) },
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
