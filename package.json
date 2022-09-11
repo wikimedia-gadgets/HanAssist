@@ -29,7 +29,7 @@
     "eslint-plugin-import": "^2.26.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
-    "terser-webpack-plugin": "^5.3.3",
+    "terser-webpack-plugin": "^5.3.6",
     "ts-jest": "^28.0.7",
     "ts-loader": "^9.3.1",
     "typedoc": "^0.23.8",
