@@ -107,4 +107,5 @@ const HanAssist: HanAssistStatic = {
   },
 };
 
-export { HanAssistStatic, HanAssist };
+export default HanAssist;
+export { HanAssistStatic };

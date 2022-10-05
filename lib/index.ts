@@ -3,9 +3,11 @@
  * For license information please see LICENSE.
  */
 
+import HanAssist, { HanAssistStatic } from './HanAssist';
+
 if (__SHIM_UXS__) {
-  // eslint-disable-next-line global-require
-  require('./shims');
+  import('./shims');
 }
 
-export * from './HanAssist';
+export default HanAssist;
+export { HanAssistStatic }; // For typedoc

@@ -8,15 +8,17 @@
     ],
     "sourceMap": true,
     "outDir": "./dist/",
-    "rootDir": "./lib/",
+    "rootDir": ".",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
     "esModuleInterop": true
   },
   "include": [
     "./lib/**/*.ts",
-    "./node_modules/types-mediawiki"
+    "./node_modules/types-mediawiki",
+    "rollup.config.ts"
   ],
   "exclude": []
 }
