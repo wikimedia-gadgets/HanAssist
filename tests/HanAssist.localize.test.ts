@@ -1,4 +1,4 @@
-import { HanAssist } from '../lib/HanAssist';
+import HanAssist from '../lib/HanAssist';
 import { getter } from './mediawiki-mock';
 
 describe('HanAssist.localize', () => {
