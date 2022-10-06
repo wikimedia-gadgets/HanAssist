@@ -4,10 +4,7 @@
  */
 
 import HanAssist, { HanAssistStatic } from './HanAssist';
-
-if (__SHIM_UXS__) {
-  import('./shims');
-}
+import './shims';
 
 export default HanAssist;
 export { HanAssistStatic }; // For typedoc

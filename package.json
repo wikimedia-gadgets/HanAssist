@@ -9,15 +9,12 @@
   "types": "HanAssist.d.ts",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "pnpm run build:prod",
-    "build:prod": "rollup -c ./rollup.config.ts",
-    "build:prod:no-shim": "pnpm run build:prod --environment SHIM_UXS:false",
+    "build": "rollup -c ./rollup.config.ts",
     "lint": "tsc -p ./ --noemit && eslint . --ext .js,.ts",
     "test": "jest",
     "doc": "typedoc"
   },
   "devDependencies": {
-    "@rollup/plugin-replace": "^4.0.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/jest": "^28.1.6",
     "@types/jquery": "^3.5.14",

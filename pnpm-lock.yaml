@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@rollup/plugin-replace': ^4.0.0
   '@rollup/plugin-typescript': ^8.5.0
   '@types/jest': ^28.1.6
   '@types/jquery': ^3.5.14
@@ -28,7 +27,6 @@ dependencies:
   jsdom: 20.0.0
 
 devDependencies:
-  '@rollup/plugin-replace': 4.0.0_rollup@2.79.1
   '@rollup/plugin-typescript': 8.5.0_5j6xs4al5kvj74qioxrurhiohm
   '@types/jest': 28.1.6
   '@types/jquery': 3.5.14
@@ -699,16 +697,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
-    dev: true
-
-  /@rollup/plugin-replace/4.0.0_rollup@2.79.1:
-    resolution: {integrity: sha512-+rumQFiaNac9y64OHtkHGmdjm7us9bo1PlbgQfdihQtuNxzjpaB064HbRnewUOggLQxVCCyINfStkgmBeQpv1g==}
-    peerDependencies:
-      rollup: ^1.20.0 || ^2.0.0
-    dependencies:
-      '@rollup/pluginutils': 3.1.0_rollup@2.79.1
-      magic-string: 0.25.9
-      rollup: 2.79.1
     dev: true
 
   /@rollup/plugin-typescript/8.5.0_5j6xs4al5kvj74qioxrurhiohm:
@@ -2992,12 +2980,6 @@ packages:
     resolution: {integrity: sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==}
     dev: true
 
-  /magic-string/0.25.9:
-    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
-    dependencies:
-      sourcemap-codec: 1.4.8
-    dev: true
-
   /make-dir/3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
@@ -3533,10 +3515,6 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-
-  /sourcemap-codec/1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    dev: true
 
   /sprintf-js/1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
