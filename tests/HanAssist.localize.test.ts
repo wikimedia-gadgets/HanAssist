@@ -109,12 +109,12 @@ describe('HanAssist.localize', () => {
     test.each([
       { locale: 'zh', expected: '123' },
       { locale: 'zh-hans', expected: 'Symbol()' },
-      { locale: 'zh-hant', expected: 'function () { }' },
+      { locale: 'zh-hant', expected: '() => { }' },
       { locale: 'zh-cn', expected: '123' },
       { locale: 'zh-sg', expected: '123' },
       { locale: 'zh-my', expected: 'true' },
       { locale: 'zh-mo', expected: '[object Object]' },
-      { locale: 'zh-hk', expected: 'function Function() { [native code] }' },
+      { locale: 'zh-hk', expected: Function.toString() },
       { locale: 'zh-tw', expected: '[object Object]' },
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
