@@ -1,5 +1,6 @@
 import HanAssist from '../lib/HanAssist';
 import { getter } from './mediawiki-mock';
+import { langNCandidatesKeyNameMap } from './utils';
 
 describe('HanAssist.localize', () => {
   afterEach(() => {
@@ -106,9 +107,7 @@ describe('HanAssist.localize', () => {
       sg: BigInt(123),
     };
 
-    test.each((['zh', 'zh-hans', 'zh-hant', 'zh-cn', 'zh-sg', 'zh-my', 'zh-mo', 'zh-hk', 'zh-tw'] as const).map(function (locale) {
-      return {locale, expected: String(CANDIDATES[locale])};
-    }))('in $locale', ({ locale, expected }) => {
+    test.each((langNCandidatesKeyNameMap).map(([locale, key]) => ({ locale, expected: String(CANDIDATES[key]) })))('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
       /// @ts-expect-error For testing
