@@ -160,17 +160,9 @@ describe('HanAssist.vary', () => {
       sg: BigInt(123),
     };
 
-    test.each([
-      { locale: 'zh', expected: '123' },
-      { locale: 'zh-hans', expected: 'Symbol()' },
-      { locale: 'zh-hant', expected: 'function () { }' },
-      { locale: 'zh-cn', expected: '123' },
-      { locale: 'zh-sg', expected: '123' },
-      { locale: 'zh-my', expected: 'true' },
-      { locale: 'zh-mo', expected: '[object Object]' },
-      { locale: 'zh-hk', expected: 'function Function() { [native code] }' },
-      { locale: 'zh-tw', expected: '[object Object]' },
-    ])('in $locale', ({ locale, expected }) => {
+    test.each((['zh', 'zh-hans', 'zh-hant', 'zh-cn', 'zh-sg', 'zh-my', 'zh-mo', 'zh-hk', 'zh-tw'] as const).map(function (locale) {
+      return {locale, expected: String(CANDIDATES[locale])};
+    }))('in $locale', ({ locale, expected }) => {
       getter.mockImplementation((val) => {
         if (val === 'wgUserVariant') {
           return locale;
