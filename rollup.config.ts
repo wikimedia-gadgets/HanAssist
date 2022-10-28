@@ -1,6 +1,6 @@
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import { readFileSync } from 'fs';
 
 export default defineConfig({
