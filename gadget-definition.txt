@@ -1,1 +1,1 @@
-HanAssist[ResourceLoader|package|hidden|targets=desktop,mobile|dependencies=user.options]|HanAssist.js
+* HanAssist[ResourceLoader|package|hidden|targets=desktop,mobile|dependencies=user.options]|HanAssist.js
