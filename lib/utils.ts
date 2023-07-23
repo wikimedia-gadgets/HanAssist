@@ -1,9 +1,4 @@
 /**
- * @file Utilities.
- * For license information please see LICENSE.
- */
-
-/**
  * Safely convert an object to string.
  * @private
  * @param val value to convert
@@ -20,10 +15,8 @@ function safelyToString(val: unknown): string {
   }
 }
 
-function assertPlainObject(val: unknown): asserts val is Record<string, string> {
-  if (!$.isPlainObject(val)) {
-    throw new TypeError('Require an object!');
-  }
+function isPlainObject(val: unknown): val is Record<string, unknown> {
+  return $.isPlainObject(val);
 }
 
-export { safelyToString, assertPlainObject };
+export { safelyToString, isPlainObject };

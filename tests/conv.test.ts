@@ -1,7 +1,7 @@
-import HanAssist from '../lib/HanAssist';
+import { conv } from '../lib/index';
 import { getter } from './mediawiki-mock';
 
-describe('HanAssist.localize', () => {
+describe('conv', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -35,7 +35,7 @@ describe('HanAssist.localize', () => {
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
-      expect(HanAssist.localize(CANDIDATES)).toBe(expected);
+      expect(conv(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -57,7 +57,7 @@ describe('HanAssist.localize', () => {
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
-      expect(HanAssist.localize(CANDIDATES)).toBe(expected);
+      expect(conv(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -79,7 +79,7 @@ describe('HanAssist.localize', () => {
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
-      expect(HanAssist.localize(CANDIDATES)).toBe(expected);
+      expect(conv(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -120,12 +120,12 @@ describe('HanAssist.localize', () => {
       getter.mockReturnValue(locale);
 
       /// @ts-expect-error For testing
-      expect(HanAssist.localize(CANDIDATES)).toBe(expected);
+      expect(conv(CANDIDATES)).toBe(expected);
     });
   });
 
   test('throws when first parameter is not object', () => {
     /// @ts-expect-error For testing
-    expect(() => HanAssist.localize(1)).toThrow(TypeError);
+    expect(() => conv(1)).toThrow(TypeError);
   });
 });

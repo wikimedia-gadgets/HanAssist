@@ -1,6 +1,6 @@
 dist
 node_modules
 docs
-gadget-append.js
-gadget-prepend.js
+gadget-intro.js
+gadget-outro.js
 *.d.ts

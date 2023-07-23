@@ -1,7 +1,7 @@
-import HanAssist from '../lib/HanAssist';
+import { convByVar } from '../lib/index';
 import { getter } from './mediawiki-mock';
 
-describe('HanAssist.vary', () => {
+describe('convByVar', () => {
   afterEach(() => {
     jest.restoreAllMocks();
   });
@@ -40,7 +40,7 @@ describe('HanAssist.vary', () => {
         return null;
       });
 
-      expect(HanAssist.vary(CANDIDATES)).toBe(expected);
+      expect(convByVar(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -67,7 +67,7 @@ describe('HanAssist.vary', () => {
         return null;
       });
 
-      expect(HanAssist.vary(CANDIDATES)).toBe(expected);
+      expect(convByVar(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -94,7 +94,7 @@ describe('HanAssist.vary', () => {
         return null;
       });
 
-      expect(HanAssist.vary(CANDIDATES)).toBe(expected);
+      expect(convByVar(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -126,14 +126,14 @@ describe('HanAssist.vary', () => {
       { locale: 'fr', expected: 'other' },
     ])('in $locale', ({ locale, expected }) => {
       getter.mockImplementation((val) => {
-        // mw.user.options.get( 'variant' )
+        // mw.user.options.get('variant')
         if (val === 'variant') {
           return locale;
         }
         return null;
       });
 
-      expect(HanAssist.vary(CANDIDATES)).toBe(expected);
+      expect(convByVar(CANDIDATES)).toBe(expected);
     });
   });
 
@@ -179,12 +179,12 @@ describe('HanAssist.vary', () => {
       });
 
       /// @ts-expect-error For testing
-      expect(HanAssist.vary(CANDIDATES)).toBe(expected);
+      expect(convByVar(CANDIDATES)).toBe(expected);
     });
   });
 
   test('throws when first parameter is not object', () => {
     /// @ts-expect-error For testing
-    expect(() => HanAssist.vary(1)).toThrow(TypeError);
+    expect(() => convByVar(1)).toThrow(TypeError);
   });
 });

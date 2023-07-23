@@ -1,24 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es5", // TODO: Move to modern ES versions once MediaWiki fully supports them in default gadgets
     "module": "esnext",
     "lib": [
-      "es5",
+      "ESNext",
       "DOM"
     ],
-    "sourceMap": true,
+    "declaration": true,
     "outDir": "./dist/",
     "rootDir": ".",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "esModuleInterop": true
   },
   "include": [
     "./lib/**/*.ts",
     "./node_modules/types-mediawiki",
-    "rollup.config.ts"
   ],
   "exclude": []
 }
