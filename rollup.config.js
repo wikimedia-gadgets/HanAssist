@@ -15,8 +15,8 @@ export default defineConfig({
     format: 'cjs',
     generatedCode: 'es5', // Keep in sync with tsconfig.json
     inlineDynamicImports: true,
-    banner: readFileSync('./gadget-intro.js').toString(),
-    footer: readFileSync('./gadget-outro.js').toString(),
+    banner: readFileSync('./assets/intro.js').toString(),
+    footer: readFileSync('./assets/outro.js').toString(),
   },
   plugins: [
     typescript(),

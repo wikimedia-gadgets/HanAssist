@@ -10,8 +10,8 @@ At the root of the repo, run:
 
 ```sh
 pnpm
-pnpm run lint
-pnpm run compile
+pnpm run build
+pnpm run build:compat # Compatibility build, including wgU*S() shims
 ```
 
-View generated files at `./dist/`.
+See generated files at `./dist/`.
