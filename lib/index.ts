@@ -1,10 +1,6 @@
-/**
- * @file Entry point of the program.
- * For license information please see LICENSE.
- */
+if (__SHIM_UXS__) {
+  // Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
+  import('./shims');
+}
 
-import HanAssist, { HanAssistStatic } from './HanAssist';
-import './shims';
-
-export default HanAssist;
-export { HanAssistStatic }; // For typedoc
+export { Candidates, CandidateKey, conv, convByVar, batchConv } from './conversion';

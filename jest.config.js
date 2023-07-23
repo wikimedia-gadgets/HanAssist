@@ -1,15 +1,15 @@
-/* eslint-env node */
+// @ts-check
 
 /** @type {import('jest').Config} */
-module.exports = {
+export default {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jsdom', // Required for jQuery to run in Node
   setupFiles: [
     './tests/setup-jest.ts',
   ],
   globals: {
     'ts-jest': {
-      tsconfig: 'tests/tsconfig.json',
+      tsconfig: './tests/tsconfig.json',
     },
   },
 };

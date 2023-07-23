@@ -1,31 +1,39 @@
 {
   "root": true,
-  "extends": [
-    "airbnb-base"
-  ],
+  "env": {
+    "node": true,
+    "browser": true
+  },
   "rules": {
-    "no-restricted-syntax": [
+    "semi": "error",
+    "comma-dangle": [
       "error",
-      "LabeledStatement",
-      "WithStatement"
+      "always-multiline"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true,
+        "allowTemplateLiterals": true
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true
+      }
     ]
   },
-  "overrides": [
-    {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx"
-      ],
-      "extends": [
-        "airbnb-typescript/base"
-      ],
-      "plugins": [
-        "@typescript-eslint"
-      ],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "project": "./tsconfig.json"
-      }
-    }
-  ]
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+  "parserOptions": {
+    "sourceType": "module"
+  }
 }

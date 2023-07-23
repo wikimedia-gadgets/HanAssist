@@ -1,12 +1,7 @@
-/**
- * @file Provides fallbacks of legacy wgUXS-style helpers.
- * For license information please see LICENSE.
- */
+import { elect } from './conversion';
 
-import { elect } from './elect';
-
-function legacyUXS(
-  wg: string,
+function legacyUxsShim(
+  locale: string,
   hans: unknown,
   hant: unknown,
   cn: unknown,
@@ -20,13 +15,13 @@ function legacyUXS(
   try {
     return elect({
       hans, hant, cn, tw, hk, sg, zh, mo, my,
-    }, wg);
+    }, locale);
   } catch {
     return undefined;
   }
 }
 
-function generateLegacyHelper(configName: 'wgUserLanguage' | 'wgUserVariant') {
+function generateLegacyUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
   return (
     hans: unknown,
     hant: unknown,
@@ -37,13 +32,14 @@ function generateLegacyHelper(configName: 'wgUserLanguage' | 'wgUserVariant') {
     zh: unknown,
     mo: unknown,
     my: unknown,
-  ) => legacyUXS(mw.config.get(configName), hans, hant, cn, tw, hk, sg, zh, mo, my);
+  ) => legacyUxsShim(mw.config.get(configName), hans, hant, cn, tw, hk, sg, zh, mo, my);
 }
 
-function shim(name: string, func: (...args: any[]) => unknown) {
-  mw.log.deprecate(window, name, func, 'Use mw.libs.HanAssist instead.');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function shim(name: string, replacement: string, func: (...args: any[]) => unknown) {
+  mw.log.deprecate(window, name, func, `Use ${replacement} instead.`);
 }
 
-shim('wgULS', generateLegacyHelper('wgUserLanguage'));
-shim('wgUVS', generateLegacyHelper('wgUserVariant'));
-shim('wgUXS', legacyUXS);
+shim('wgULS', 'HanAssist.conv', generateLegacyUxsShim('wgUserLanguage'));
+shim('wgUVS', 'HanAssist.convByVar', generateLegacyUxsShim('wgUserVariant'));
+shim('wgUXS', 'HanAssist', legacyUxsShim);
