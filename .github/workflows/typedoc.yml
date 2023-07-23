@@ -19,9 +19,9 @@ jobs:
         with:
           node-version: '16'
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
+        uses: pnpm/action-setup@v2
         with:
-          version: 7.6.0
+          version: 8
       - name: Install & Generate TypeDoc
         run: |
           pnpm install --frozen-lockfile
