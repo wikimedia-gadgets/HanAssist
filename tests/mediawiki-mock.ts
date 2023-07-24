@@ -13,7 +13,7 @@ const mockMW = new Proxy({}, {
 
     // Mock mw.log.warn
     if (prop === 'warn') {
-      return console.log;
+      return console.warn;
     }
 
     return receiver;

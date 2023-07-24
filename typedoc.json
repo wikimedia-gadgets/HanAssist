@@ -3,7 +3,6 @@
   "entryPoints": [
     "./lib/index.ts"
   ],
-  "readme": "none",
   "out": "./docs",
   "excludePrivate": true,
   "name": "HanAssist Documentation"
