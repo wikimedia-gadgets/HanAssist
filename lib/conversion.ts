@@ -35,14 +35,23 @@ function elect<T>(candidates: Partial<Record<CandidateKey, T>>, locale: string):
 /**
  * A wrapper around `elect()` to ensure no non-string results are returned.
  */
-function electString(candidates: Candidates, locale: string): string {
+function safeElect(candidates: Candidates, locale: string): string {
+  // Guards to ensure types at runtime
   if (!isPlainObject(candidates)) {
-    throw new TypeError('[HanAssist] Invalid parameter. Needs to be an object.');
+    throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');
+  }
+  if (typeof locale !== 'string') {
+    mw.log.warn('[HanAssist] locale parameter must be a string. Please check your code.');
+    locale = safelyToString(locale);
   }
 
   const result = elect(candidates, locale);
-  if (result === null) {
+
+  if (typeof result !== 'string') {
     mw.log.warn('[HanAssist] Non-string conversion result detected. Please check your code.');
+  }
+
+  if (result === null) {
     return '';
   }
 
@@ -56,7 +65,7 @@ function electString(candidates: Candidates, locale: string): string {
  * @returns selected value
  */
 function conv(candidates: Candidates): string {
-  return electString(candidates, mw.config.get('wgUserLanguage'));
+  return safeElect(candidates, mw.config.get('wgUserLanguage'));
 }
 
 /**
@@ -65,7 +74,7 @@ function conv(candidates: Candidates): string {
  * @returns selected value
  */
 function convByVar(candidates: Candidates): string {
-  return electString(candidates, mw.config.get('wgUserVariant') ?? mw.user.options.get('variant'));
+  return safeElect(candidates, mw.config.get('wgUserVariant') ?? mw.user.options.get('variant'));
 }
 
 /**
@@ -79,7 +88,7 @@ function batchConv(
   locale = mw.config.get('wgUserLanguage')
 ): Record<string, string> {
   if (!isPlainObject(candidatesDict)) {
-    throw new TypeError('[HanAssist] Invalid parameter. Needs to be an object.');
+    throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');
   }
 
   const result: Record<string, string> = {};
@@ -87,7 +96,7 @@ function batchConv(
   for (const key in candidatesDict) {
     const candidates = candidatesDict[key];
     const electionResult = isPlainObject(candidates)
-      ? electString(candidates, locale)
+      ? safeElect(candidates, locale)
       : safelyToString(candidates);
     result[key] = electionResult;
   }
