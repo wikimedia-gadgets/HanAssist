@@ -13,7 +13,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "rollup -c",
-    "build:compat": "SHIM_UXS=1 rollup -c",
+    "build:compat": "COMPAT=1 rollup -c",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "test": "jest",

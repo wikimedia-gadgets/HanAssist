@@ -1,6 +1,5 @@
 /**
  * Safely convert an object to string.
- * @private
  * @param val value to convert
  * @return string
  */

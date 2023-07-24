@@ -6,7 +6,7 @@ import { readFileSync } from 'fs';
 import mwGadget from 'rollup-plugin-mediawiki-gadget';
 import replace from '@rollup/plugin-replace';
 
-const shimUXS = process.env.SHIM_UXS !== undefined;
+const compat = process.env.COMPAT !== undefined;
 
 export default defineConfig({
   input: 'lib/index.ts',
@@ -22,7 +22,7 @@ export default defineConfig({
     typescript(),
     replace({
       preventAssignment: true,
-      __SHIM_UXS__: JSON.stringify(shimUXS),
+      COMPAT: JSON.stringify(compat),
     }),
     mwGadget({
       gadgetDef: './gadget-definition.txt',
