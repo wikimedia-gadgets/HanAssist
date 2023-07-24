@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5", // TODO: Move to modern ES versions once MediaWiki fully supports them in default gadgets
-    "module": "esnext",
+    "target": "ES5", // TODO: Move to modern ES versions once MediaWiki fully supports them in default gadgets
+    "module": "ESNext",
     "lib": [
       "ESNext",
       "DOM"
@@ -12,10 +12,10 @@
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   },
   "include": [
-    "./**/*.ts",
+    "lib/**/*.ts"
   ],
   "exclude": []
 }

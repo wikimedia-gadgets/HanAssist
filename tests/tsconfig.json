@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [
-      "esnext",
+      "ESNext",
       "DOM",
     ],
     "noEmit": true,
     "strict": true,
+    "rootDir": ".",
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node"
   },
   "include": [
-    "*.ts",
-    "../node_modules/types-mediawiki"
+    "**/*.ts"
   ],
   "exclude": []
 }
