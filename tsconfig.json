@@ -8,15 +8,14 @@
     ],
     "declaration": true,
     "outDir": "./dist/",
-    "rootDir": ".",
+    "rootDir": "./lib/",
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
   },
   "include": [
-    "./lib/**/*.ts",
-    "./node_modules/types-mediawiki",
+    "./**/*.ts",
   ],
   "exclude": []
 }
