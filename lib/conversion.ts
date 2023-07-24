@@ -62,10 +62,11 @@ function safeElect(candidates: Candidates, locale: string): string {
 /**
  * Select between candidates based on user language.
  * @param candidates an object of candidates
+ * @param locale locale, defaults to `wgUserLanguage`
  * @returns selected value
  */
-function conv(candidates: Candidates): string {
-  return safeElect(candidates, mw.config.get('wgUserLanguage'));
+function conv(candidates: Candidates, locale = mw.config.get('wgUserLanguage')): string {
+  return safeElect(candidates, locale);
 }
 
 /**
