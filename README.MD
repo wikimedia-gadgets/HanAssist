@@ -135,8 +135,8 @@ mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Ap
 // 其他用法详见 MediaWiki 文档
 ```
 
-<!--### 使用类型定义（`.d.ts`）文件
-如果您的小工具使用 TypeScript 编写，那么，您可以将根目录中的 [`HanAssist.d.ts`](./HanAssist.d.ts) 文件复制至您的项目目录中。这样，您就可以获得完整的编译时类型检查。-->
+### 使用类型定义文件
+本小工具[提供了类型定义文件](./typings.d.ts)，将其中的内容复制到您的项目中即可使用。
 
 ## 局限
 在软件领域，[没有银弹](https://zh.wikipedia.org/wiki/%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9)，因此 HanAssist 也并非完美。在一些使用场景下，您应该使用其他更合适的工具而非 HanAssist。

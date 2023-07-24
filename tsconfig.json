@@ -6,7 +6,6 @@
       "ESNext",
       "DOM"
     ],
-    "declaration": true,
     "outDir": "./dist/",
     "rootDir": "./lib/",
     "strict": true,
