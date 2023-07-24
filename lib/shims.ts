@@ -1,4 +1,4 @@
-import { elect } from './conversion';
+import { batchConv, conv, convByVar, elect } from './conversion';
 
 function legacyUxsShim(
   locale: string,
@@ -40,6 +40,14 @@ function shim(name: string, replacement: string, func: (...args: any[]) => unkno
   mw.log.deprecate(window, name, func, `Use ${replacement} instead.`);
 }
 
+// Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
 shim('wgULS', 'HanAssist.conv', generateLegacyUxsShim('wgUserLanguage'));
 shim('wgUVS', 'HanAssist.convByVar', generateLegacyUxsShim('wgUserVariant'));
 shim('wgUXS', 'HanAssist', legacyUxsShim);
+
+// Compatibility: redirect HanAssist <= v3 calls to v4
+mw.libs.HanAssist = {
+  localize: conv,
+  vary: convByVar,
+  parse: batchConv,
+};

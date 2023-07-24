@@ -1,5 +1,4 @@
 if (COMPAT) {
-  // Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
   import('./shims');
 }
 
