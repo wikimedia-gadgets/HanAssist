@@ -13,6 +13,11 @@
     "esModuleInterop": true,
     "moduleResolution": "node"
   },
+  "references": [
+    {
+      "path": ".."
+    }
+  ],
   "include": [
     "**/*.ts"
   ],

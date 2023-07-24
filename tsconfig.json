@@ -10,6 +10,7 @@
     "outDir": "./dist/",
     "rootDir": "./lib/",
     "strict": true,
+    "composite": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
