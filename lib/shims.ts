@@ -46,8 +46,9 @@ shim('wgUVS', 'HanAssist.convByVar', generateLegacyUxsShim('wgUserVariant'));
 shim('wgUXS', 'HanAssist', legacyUxsShim);
 
 // Compatibility: redirect HanAssist <= v3 calls to v4
-mw.libs.HanAssist = {
-  localize: conv,
-  vary: convByVar,
-  parse: batchConv,
-};
+mw.log.deprecate(
+  mw.libs,
+  'HanAssist',
+  { localize: conv, vary: convByVar, parse: batchConv },
+  'Use require() to import HanAssist functions instead.',
+);
