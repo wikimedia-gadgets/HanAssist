@@ -20,6 +20,12 @@ conv( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，�
 
 convByVar( { hans: '一天一苹果，医生远离我。', hant: '一天一蘋果，醫生遠離我。' } );
 // => 页面变体为简中：“一天一苹果，医生远离我。”；繁中：“一天一蘋果，醫生遠離我。”
+
+// 由于技术限制，如果 HanAssist 位于其他 wiki 上，那么函数将会导出到 mw.libs.HanAssist 全局空间
+mw.loader.load( 'https://another.wiki/w/index.php?title=MediaWiki:Gadget-HanAssist.js&action=raw&ctype=text/javascript' );
+// 按照如下方式使用：
+// mw.libs.HanAssist.conv( ... );
+// mw.libs.HanAssist.convByVar( ... );
 ```
 
 ## 为什么使用 HanAssist v4？
