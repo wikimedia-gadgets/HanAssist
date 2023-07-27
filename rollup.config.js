@@ -12,7 +12,8 @@ export default defineConfig({
   input: 'lib/index.ts',
   output: {
     file: 'dist/Gadget-HanAssist.js',
-    format: 'cjs',
+    format: 'umd', // Use UMD so the script works outside a module system
+    name: 'mw.libs.HanAssist',
     generatedCode: 'es5', // Keep in sync with tsconfig.json
     inlineDynamicImports: true,
     banner: readFileSync('./assets/intro.js').toString(),

@@ -1,6 +1,6 @@
 {
   "name": "han-assist",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A MediaWiki gadget to ease Chinese variant handling in user scripts and gadgets.",
   "repository": "github:diskdance/HanAssist",
   "author": "diskdance",

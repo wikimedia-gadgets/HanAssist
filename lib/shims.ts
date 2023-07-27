@@ -1,6 +1,6 @@
 import { batchConv, conv, convByVar, elect } from './conversion';
 
-function legacyUxsShim(
+function uxsShim(
   locale: string,
   hans: unknown,
   hant: unknown,
@@ -21,7 +21,7 @@ function legacyUxsShim(
   }
 }
 
-function generateLegacyUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
+function generateUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
   return (
     hans: unknown,
     hant: unknown,
@@ -32,23 +32,22 @@ function generateLegacyUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
     zh: unknown,
     mo: unknown,
     my: unknown,
-  ) => legacyUxsShim(mw.config.get(configName), hans, hant, cn, tw, hk, sg, zh, mo, my);
+  ) => uxsShim(mw.config.get(configName), hans, hant, cn, tw, hk, sg, zh, mo, my);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function shim(name: string, replacement: string, func: (...args: any[]) => unknown) {
-  mw.log.deprecate(window, name, func, `Use ${replacement} instead.`);
+function deprecate(root: any, name: string, func: (...args: any[]) => any, replacement: string) {
+  mw.log.deprecate(root, name, func, `Use ${replacement} instead.`);
 }
 
 // Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
-shim('wgULS', 'HanAssist.conv', generateLegacyUxsShim('wgUserLanguage'));
-shim('wgUVS', 'HanAssist.convByVar', generateLegacyUxsShim('wgUserVariant'));
-shim('wgUXS', 'HanAssist', legacyUxsShim);
+deprecate(self, 'wgULS', generateUxsShim('wgUserLanguage'), 'conv');
+deprecate(self, 'wgUVS', generateUxsShim('wgUserVariant'), 'convByVar');
+deprecate(self, 'wgUXS', uxsShim, 'conv');
 
 // Compatibility: redirect HanAssist <= v3 calls to v4
-mw.log.deprecate(
-  mw.libs,
-  'HanAssist',
-  { localize: conv, vary: convByVar, parse: batchConv },
-  'Use require() to import HanAssist functions instead.',
-);
+const globalMountPoint = (mw.libs.HanAssist = mw.libs.HanAssist || {});
+
+deprecate(globalMountPoint, 'localize', conv, 'conv');
+deprecate(globalMountPoint, 'vary', convByVar, 'convByVar');
+deprecate(globalMountPoint, 'parse', batchConv, 'batchConv');
