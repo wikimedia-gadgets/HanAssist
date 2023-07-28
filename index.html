@@ -28,8 +28,8 @@
 <li>仍然使用旧式的 <code>wgXXX</code> 类名称，污染全局空间。现今 MediaWiki 中的此类变量全部通过 <code>mw.config.get</code> 获取，但这两个函数并未也无法跟进。</li>
 <li>使用意义不明的缩写，影响代码可读性。</li>
 <li>参数列表过长，影响阅读。设计良好的 JavaScript 函数<a href="https://github.com/ryanmcdermott/clean-code-javascript#function-arguments-2-or-fewer-ideally">最多仅应包含两个参数</a>。
-设想一下，如果像这样调用 <code>wgULS()</code>：
-<code>javascript wgULS( undefined, undefined, &#39;显示%s的用户日志&#39;, &#39;顯示%s的使用者日誌&#39;, &#39;顯示%s的用戶日誌&#39; ); </code>
+设想一下，如果像这样调用 <code>wgULS()</code>：<pre><code class="language-javascript"><span class="hl-4">wgULS</span><span class="hl-2">( </span><span class="hl-1">undefined</span><span class="hl-2">, </span><span class="hl-1">undefined</span><span class="hl-2">, </span><span class="hl-5">&#39;显示%s的用户日志&#39;</span><span class="hl-2">, </span><span class="hl-5">&#39;顯示%s的使用者日誌&#39;</span><span class="hl-2">, </span><span class="hl-5">&#39;顯示%s的用戶日誌&#39;</span><span class="hl-2"> );</span>
+</code></pre>
 难道不会使代码非常难以阅读及维护？</li>
 <li>并非类型安全。<code>wgULS()</code> 和 <code>wgUVS()</code> 允许任何类型的参数传入，这可能会导致非预期的行为发生，并且使得代码难以维护。</li>
 <li>没有代码文档。这使得不了解这些函数的人必须通过直接阅读代码来确定它们的用法。</li>
