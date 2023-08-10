@@ -41,9 +41,9 @@ function deprecate(root: any, name: string, func: (...args: any[]) => any, repla
 }
 
 // Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
-deprecate(self, 'wgULS', generateUxsShim('wgUserLanguage'), 'conv');
-deprecate(self, 'wgUVS', generateUxsShim('wgUserVariant'), 'convByVar');
-deprecate(self, 'wgUXS', uxsShim, 'conv');
+deprecate(self, 'wgULS', generateUxsShim('wgUserLanguage'), 'HanAssist.conv');
+deprecate(self, 'wgUVS', generateUxsShim('wgUserVariant'), 'HanAssist.convByVar');
+deprecate(self, 'wgUXS', uxsShim, 'HanAssist.conv');
 
 // Compatibility: redirect HanAssist <= v3 calls to v4
 const globalMountPoint = (mw.libs.HanAssist = mw.libs.HanAssist || {});
