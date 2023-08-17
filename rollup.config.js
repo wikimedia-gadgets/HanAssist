@@ -14,7 +14,7 @@ export default defineConfig({
     format: 'umd', // Use UMD so the script works outside a module system
     name: 'mw.libs.HanAssist',
     amd: {
-      id: 'HanAssist'
+      id: 'HanAssist',
     },
     generatedCode: 'es5', // Keep in sync with tsconfig.json
     inlineDynamicImports: true,
@@ -23,7 +23,7 @@ export default defineConfig({
   },
   plugins: [
     typescript({
-      outputToFilesystem: true
+      outputToFilesystem: true,
     }),
     replace({
       preventAssignment: true,
