@@ -1,3 +1,5 @@
+export const v3Compat: boolean = COMPAT;
+
 if (COMPAT) {
   import('./shims');
 }
