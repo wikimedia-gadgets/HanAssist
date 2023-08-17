@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
-import terser from '@rollup/plugin-terser';
 import { readFileSync } from 'fs';
 import mwGadget from 'rollup-plugin-mediawiki-gadget';
 import replace from '@rollup/plugin-replace';
@@ -26,13 +25,7 @@ export default defineConfig({
       COMPAT: JSON.stringify(compat),
     }),
     mwGadget({
-      gadgetDef: './gadget-definition.txt',
-    }),
-    terser({
-      format: {
-        comments: /(^\*!|nowiki)/i, // Preserve banners & nowiki guards
-      },
-      ecma: 5, // Keep in sync with tsconfig.json
+      gadgetDef: '.gadgetdefinition',
     }),
   ],
 });

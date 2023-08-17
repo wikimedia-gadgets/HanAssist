@@ -22,7 +22,7 @@ declare module "ext.gadget.HanAssist" {
    */
   export function batchConv(candidatesDict: Record<string, string | Candidates>, locale?: string): Record<string, string>;
 
-  export declare global {
+  global {
     /** @deprecated Use `HanAssist.conv` instead */
     function wgULS(hans?: string, hant?: string, cn?: string, tw?: string, hk?: string, sg?: string, zh?: string, mo?: string, my?: string): string;
     /** @deprecated Use `HanAssist.convByVar` instead */

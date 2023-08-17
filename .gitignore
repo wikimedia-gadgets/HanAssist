@@ -140,3 +140,6 @@ dist
 
 # Generated docs
 docs
+
+# Rollup
+.rollup.cache
