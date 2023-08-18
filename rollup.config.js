@@ -13,13 +13,18 @@ export default defineConfig({
     file: 'dist/Gadget-HanAssist.js',
     format: 'umd', // Use UMD so the script works outside a module system
     name: 'mw.libs.HanAssist',
+    amd: {
+      id: 'HanAssist',
+    },
     generatedCode: 'es5', // Keep in sync with tsconfig.json
     inlineDynamicImports: true,
     banner: readFileSync('./assets/intro.js').toString(),
     footer: readFileSync('./assets/outro.js').toString(),
   },
   plugins: [
-    typescript(),
+    typescript({
+      outputToFilesystem: true,
+    }),
     replace({
       preventAssignment: true,
       COMPAT: JSON.stringify(compat),
