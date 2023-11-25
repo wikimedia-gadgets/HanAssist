@@ -1,6 +1,6 @@
 # HanAssist v4 ![Linter](https://github.com/diskdance/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/diskdance/HanAssist/actions/workflows/test.yml/badge.svg)
 [English](./README.EN.MD)
-[代码文档](https://diskdance.github.io/HanAssist/)
+[代码文档](https://wikimedia-gadgets.github.io/HanAssist/)
 
 HanAssist v4 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
 
