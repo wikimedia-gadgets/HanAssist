@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5", // TODO: Move to modern ES versions once MediaWiki fully supports them in default gadgets
+    "target": "ES2016", // MediaWiki >= 1.42.0-wmf.13 supports up to ES2016
     "module": "ESNext",
     "lib": [
       "ESNext",
