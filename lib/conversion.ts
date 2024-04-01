@@ -75,7 +75,15 @@ function conv(candidates: Candidates, locale = mw.config.get('wgUserLanguage')):
  * @returns selected value
  */
 function convByVar(candidates: Candidates): string {
-  return safeElect(candidates, mw.config.get('wgUserVariant') ?? mw.user.options.get('variant'));
+  return safeElect(
+    candidates,
+    mw.config.get('wgUserVariant')
+    // Under certain circumstances, `wgUserVariant` is null but `?variant` URL param is recognized
+    // One example being documentations in Module namespace
+    // So specifying it as a fallback
+    ?? new URL(location.href).searchParams.get('variant')
+    ?? mw.user.options.get('variant')
+  );
 }
 
 /**
