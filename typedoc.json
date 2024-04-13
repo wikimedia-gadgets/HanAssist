@@ -1,9 +1,0 @@
-{
-  "tsconfig": "./tsconfig.json",
-  "entryPoints": [
-    "./lib/index.ts"
-  ],
-  "out": "./docs",
-  "excludePrivate": true,
-  "name": "HanAssist Documentation"
-}
