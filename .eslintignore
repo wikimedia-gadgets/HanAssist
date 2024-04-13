@@ -1,6 +1,0 @@
-dist
-node_modules
-docs
-gadget-intro.js
-gadget-outro.js
-*.d.ts

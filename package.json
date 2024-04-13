@@ -20,23 +20,25 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@eslint/js": "^8.56.0",
     "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-typescript": "^9.0.2",
     "@types/jest": "^28.1.6",
     "@types/jquery": "^3.5.14",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
-    "eslint": "^8.20.0",
+    "eslint": "^8.56.0",
+    "globals": "^15.0.0",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^29.6.1",
     "rollup": "^3.26.3",
     "rollup-plugin-mediawiki-gadget": "^1.0.5",
     "ts-jest": "^28.0.7",
     "types-mediawiki": "^1.4.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "typescript-eslint": "^7.6.0"
   },
   "dependencies": {
     "jquery": "^3.6.0",
-    "jsdom": "^20.0.0"
+    "jsdom": "^20.0.0",
+    "tslib": "^2.6.2"
   }
 }
