@@ -16,7 +16,6 @@ export default defineConfig({
     amd: {
       id: 'HanAssist',
     },
-    generatedCode: 'es5', // Keep in sync with tsconfig.json
     inlineDynamicImports: true,
     banner: readFileSync('./assets/intro.js').toString(),
     footer: readFileSync('./assets/outro.js').toString(),
