@@ -1,8 +1,7 @@
-# HanAssist v4 ![Linter](https://github.com/diskdance/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/diskdance/HanAssist/actions/workflows/test.yml/badge.svg)
+# HanAssist ![Lint](https://github.com/diskdance/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/diskdance/HanAssist/actions/workflows/test.yml/badge.svg)
 [English](./README.EN.MD)
-[代码文档](https://wikimedia-gadgets.github.io/HanAssist/)
 
-HanAssist v4 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
+HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
 
 本程序的目标是取代 `wgULS()` 和 `wgUVS()`。
 
@@ -29,7 +28,7 @@ mw.loader.load( 'https://another.wiki/w/index.php?title=MediaWiki:Gadget-HanAssi
 // mw.libs.HanAssist.convByVar( ... );
 ```
 
-## 为什么使用 HanAssist v4？
+## 为什么使用 HanAssist？
 `wgULS()` 和 `wgUVS()` 几乎是中文维基百科每个用户脚本和小工具都要使用到的功能。它们极大方便了中文变体消息的处理，但随着 JavaScript 的发展，它们的问题也逐渐显现：
 
 1. 仍然使用旧式的 `wgXXX` 类名称，污染全局空间。现今 MediaWiki 中的此类变量全部通过 `mw.config.get` 获取，但这两个函数并未也无法跟进。
@@ -43,7 +42,7 @@ mw.loader.load( 'https://another.wiki/w/index.php?title=MediaWiki:Gadget-HanAssi
 4. 并非类型安全。`wgULS()` 和 `wgUVS()` 允许任何类型的参数传入，这可能会导致非预期的行为发生，并且使得代码难以维护。
 5. 没有代码文档。这使得不了解这些函数的人必须通过直接阅读代码来确定它们的用法。
 
-为了解决这些问题，我们制作了 HanAssist v4。它具有如下优点：
+为了解决这些问题，我们制作了 HanAssist。它具有如下优点：
 
 1. 不占用全局空间，利用 ResourceLoader 模块系统实现按需导入；
 2. 采用命名参数语法，显著提升代码可读性；

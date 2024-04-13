@@ -1,5 +1,5 @@
-# HanAssist v4
-[Code documentation](https://diskdance.github.io/HanAssist/)
+# HanAssist
+[简体中文](./README.MD)
 
 HanAssist is a helper gadget on Chinese Wikipedia to ease Chinese variant handling in user scripts and gadgets. It provides `conv`, `convByVar` and `batchConv` functions on the wiki.
 
