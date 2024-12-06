@@ -1,4 +1,4 @@
-# HanAssist ![Lint](https://github.com/diskdance/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/diskdance/HanAssist/actions/workflows/test.yml/badge.svg)
+# HanAssist ![Lint](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/test.yml/badge.svg)
 [English](./README.EN.MD)
 
 HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
@@ -142,7 +142,7 @@ mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Ap
 ```
 
 ### 使用类型定义文件
-本小工具[提供了类型定义文件](./typings.d.ts)，将其中的内容复制到您的项目中即可使用。
+本小工具[提供了类型定义文件](./typings.d.ts)，将其中的内容复制到您的 MediaWiki 项目中即可使用。
 
 ## 局限
 在软件领域，[没有银弹](https://zh.wikipedia.org/wiki/%E6%B2%A1%E6%9C%89%E9%93%B6%E5%BC%B9)，因此 HanAssist 也并非完美。在一些使用场景下，您应该使用其他更合适的工具而非 HanAssist。

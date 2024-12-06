@@ -26,4 +26,4 @@ mw.loader.load( 'https://another.wiki/w/index.php?title=MediaWiki:Gadget-HanAssi
 // mw.libs.HanAssist.convByVar( ... );
 ```
 
-Since this gadget is mainly for Chinese users, most of its documentation is written in Chinese. For building instructions, see [CONTRIBUTING.MD](./CONTRIBUTING.MD). For TypeScript definitions, see [typings.d.ts](./typings.d.ts).
+Since this gadget is mainly for Chinese users, most of its documentation is written in Chinese. For building instructions, see [CONTRIBUTING.MD](./CONTRIBUTING.MD). There is a TypeScript type definition at [typings.d.ts](./typings.d.ts) specially for MediaWiki frontend development.
