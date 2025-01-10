@@ -140,15 +140,16 @@ describe('convByVar', () => {
   describe('returns string when receiving malformed candidates', () => {
     const CANDIDATES = {
       zh: 123,
-      // eslint-disable-next-line symbol-description
+
       hans: Symbol(),
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
+
       hant: () => { },
       cn: {
         toString() {
           return 123;
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       tw: Object.create(null),
       hk: Function,
       mo: {

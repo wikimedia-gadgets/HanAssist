@@ -1,22 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ES2016", // MediaWiki >= 1.42.0-wmf.13 supports up to ES2016
+    "target": "ESNext",
     "module": "ESNext",
     "lib": [
       "ESNext",
       "DOM"
     ],
     "outDir": "./dist/",
-    "rootDir": "./lib/",
+    "rootDir": ".",
     "strict": true,
-    "composite": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "declaration": true
   },
   "include": [
-    "lib/**/*.ts"
+    "lib/**/*.ts",
+    "tests/**/*.ts",
+    "typings.d.ts"
   ],
   "exclude": []
 }

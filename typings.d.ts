@@ -1,4 +1,4 @@
-declare module "ext.gadget.HanAssist" {
+declare module 'ext.gadget.HanAssist' {
   export type CandidateKey = 'other' | 'zh' | 'hans' | 'hant' | 'cn' | 'tw' | 'hk' | 'sg' | 'mo' | 'my';
   export type Candidates = Partial<Record<CandidateKey, string>>;
   /**
@@ -20,14 +20,27 @@ declare module "ext.gadget.HanAssist" {
    * @param locale locale, defaults to `wgUserLanguage`
    * @returns converted candidates dictionary
    */
-  export function batchConv(candidatesDict: Record<string, string | Candidates>, locale?: string): Record<string, string>;
+  export function batchConv(
+    candidatesDict: Record<string, string | Candidates>, locale?: string,
+  ): Record<string, string>;
 
   global {
     /** @deprecated Use `HanAssist.conv` instead */
-    function wgULS(hans?: string, hant?: string, cn?: string, tw?: string, hk?: string, sg?: string, zh?: string, mo?: string, my?: string): string;
+    function wgULS(
+      hans?: string, hant?: string, cn?: string, tw?: string,
+      hk?: string, sg?: string, zh?: string, mo?: string, my?: string,
+    ): string;
+
     /** @deprecated Use `HanAssist.convByVar` instead */
-    function wgUVS(hans?: string, hant?: string, cn?: string, tw?: string, hk?: string, sg?: string, zh?: string, mo?: string, my?: string): string;
+    function wgUVS(
+      hans?: string, hant?: string, cn?: string, tw?: string,
+      hk?: string, sg?: string, zh?: string, mo?: string, my?: string,
+    ): string;
+
     /** @deprecated Use `HanAssist` instead */
-    function wgUXS(locale: string, hans?: string, hant?: string, cn?: string, tw?: string, hk?: string, sg?: string, zh?: string, mo?: string, my?: string): string;
+    function wgUXS(
+      locale: string, hans?: string, hant?: string, cn?: string, tw?: string,
+      hk?: string, sg?: string, zh?: string, mo?: string, my?: string,
+    ): string;
   }
 }

@@ -7,9 +7,4 @@ export default {
   setupFiles: [
     './tests/setup-jest.ts',
   ],
-  globals: {
-    'ts-jest': {
-      tsconfig: './tests/tsconfig.json',
-    },
-  },
 };

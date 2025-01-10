@@ -1,9 +1,9 @@
 # HanAssist ![Lint](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/test.yml/badge.svg)
-[English](./README.EN.MD)
 
-HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。
+HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。本程序提供了 `conv`、`convByVar` 和 `batchConv` 函数，目标是取代 `wgULS` 和 `wgUVS`。
 
-本程序的目标是取代 `wgULS()` 和 `wgUVS()`。
+HanAssist is a helper gadget on Chinese Wikipedia to ease Chinese variant handling in user scripts and gadgets. It provides `conv`, `convByVar` and `batchConv` functions on the wiki.
+
 
 ```javascript
 // 小工具需要先添加对 ext.gadget.HanAssist 的依赖
@@ -149,8 +149,16 @@ mw.msg( 'SearchHint', 'Apple' ); // => 界面语言为简中：“搜索包含Ap
 
 如果您的小工具或用户脚本需要多国语言支持，而非仅限于中文（汉语）一种，请考虑使用其他支持多语言处理的库，如 [`jQuery.i18n`](https://github.com/wikimedia/jquery.i18n)。
 
-## 贡献
-见 [CONTRIBUTING.MD](./CONTRIBUTING.MD)。
+## 构建方法
+在仓库根目录运行以下命令：
+
+```sh
+pnpm
+pnpm run build
+pnpm run build:compat # 兼容性版本，包含 wgU*S() 重定向
+```
+
+产物位于 `./dist/` 下。
 
 ## 授权 & 致谢
 本程序由 Diskdance 等制作，采用 [3-Clause BSD License](./LICENSE) 授权协议。

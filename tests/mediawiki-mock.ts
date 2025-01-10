@@ -13,9 +13,11 @@ const mockMW = new Proxy({}, {
 
     // Mock mw.log.warn
     if (prop === 'warn') {
+      // eslint-disable-next-line no-console
       return console.warn;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return receiver;
   },
 });

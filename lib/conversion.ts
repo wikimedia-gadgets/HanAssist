@@ -82,7 +82,7 @@ function convByVar(candidates: Candidates): string {
     // One example being documentations in Module namespace
     // So specifying it as a fallback
     ?? new URL(location.href).searchParams.get('variant')
-    ?? mw.user.options.get('variant')
+    ?? mw.user.options.get('variant') as string,
   );
 }
 
@@ -94,7 +94,7 @@ function convByVar(candidates: Candidates): string {
  */
 function batchConv(
   candidatesDict: Record<string, string | Candidates>,
-  locale = mw.config.get('wgUserLanguage')
+  locale = mw.config.get('wgUserLanguage'),
 ): Record<string, string> {
   if (!isPlainObject(candidatesDict)) {
     throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');

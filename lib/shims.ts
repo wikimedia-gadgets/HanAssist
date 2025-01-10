@@ -32,7 +32,7 @@ function generateUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
     zh: unknown,
     mo: unknown,
     my: unknown,
-  ) => uxsShim(mw.config.get(configName), hans, hant, cn, tw, hk, sg, zh, mo, my);
+  ) => uxsShim(mw.config.get(configName)!, hans, hant, cn, tw, hk, sg, zh, mo, my);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

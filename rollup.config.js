@@ -23,6 +23,10 @@ export default defineConfig({
   plugins: [
     typescript({
       outputToFilesystem: true,
+      compilerOptions: {
+        // MediaWiki >= 1.42.0-wmf.13 supports ES2016
+        target: 'ES2016',
+      },
     }),
     replace({
       preventAssignment: true,

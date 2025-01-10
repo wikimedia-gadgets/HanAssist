@@ -6,36 +6,37 @@ import globals from 'globals';
 
 export default tsEslint.config(
   eslint.configs.recommended,
-  ...tsEslint.configs.recommended,
+  ...tsEslint.configs.recommendedTypeChecked,
   {
     ignores: [
-      'dist',
-      'node_modules',
-      'typings.d.ts',
-      'assets',
-      '.rollup.cache',
+      'dist/',
+      'assets/',
     ],
   },
   {
-    files: ['lib/*.js'],
     languageOptions: {
-      globals: globals.browser,
-    },
-  },
-  {
-    files: ['*.config.js'],
-    languageOptions: {
-      globals: globals.node,
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
   {
     files: ['**/*.js'],
+    ...tsEslint.configs.disableTypeChecked,
+  },
+  {
+    files: ['scripts/*.js', '**/*.config.js'],
+    languageOptions: {
+      globals: {
+        ...globals.nodeBuiltin,
+      },
+    },
+  },
+  {
     rules: {
       semi: 'error',
-      'comma-dangle': [
-        'error',
-        'always-multiline',
-      ],
+      'comma-dangle': ['error', 'always-multiline'],
       quotes: [
         'error',
         'single',
@@ -53,7 +54,30 @@ export default tsEslint.config(
           ignoreTemplateLiterals: true,
         },
       ],
+      'no-constant-condition': [
+        'error',
+        {
+          checkLoops: false,
+        },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
       'quote-props': ['error', 'as-needed'],
+      'no-empty': [
+        'error',
+        { allowEmptyCatch: true },
+      ],
+      eqeqeq: ['error', 'smart'],
+      '@typescript-eslint/no-explicit-any': [
+        'error',
+        { fixToUnknown: true, ignoreRestArgs: true },
+      ],
+      'no-console': ['warn'],
     },
   },
 );

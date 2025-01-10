@@ -8,6 +8,7 @@ function safelyToString(val: unknown): string {
     if (typeof val === 'undefined' || val === null) {
       return '';
     }
+    // eslint-disable-next-line @typescript-eslint/no-base-to-string
     return String(val);
   } catch {
     return Object.prototype.toString.call(val);
