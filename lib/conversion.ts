@@ -45,14 +45,10 @@ function safeElect(candidates: Candidates, locale: string): string {
     locale = safelyToString(locale);
   }
 
-  const result = elect(candidates, locale);
+  const result = elect(candidates, locale) ?? '';
 
   if (typeof result !== 'string') {
     mw.log.warn('[HanAssist] Non-string conversion result detected. Please check your code.');
-  }
-
-  if (result === null) {
-    return '';
   }
 
   // Wrap in another guard to ensure result is really string at runtime
@@ -99,15 +95,27 @@ function batchConv(
   if (!isPlainObject(candidatesDict)) {
     throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');
   }
+  if (typeof locale !== 'string') {
+    mw.log.warn('[HanAssist] locale parameter must be a string. Please check your code.');
+    locale = safelyToString(locale);
+  }
 
   const result: Record<string, string> = {};
 
   for (const key in candidatesDict) {
     const candidates = candidatesDict[key];
-    const electionResult = isPlainObject(candidates)
-      ? safeElect(candidates, locale)
-      : safelyToString(candidates);
-    result[key] = electionResult;
+    if (isPlainObject(candidates)) {
+      const electResult = elect(candidates, locale) ?? '';
+      if (typeof electResult !== 'string') {
+        mw.log.warn(`[HanAssist] In '${key}': Non-string conversion result detected. Please check your code.`);
+      }
+      result[key] = safelyToString(electResult);
+    } else {
+      if (typeof candidates !== 'string') {
+        mw.log.warn(`[HanAssist] In '${key}': Value is neither a candidate list nor a string. Please check your code.`);
+      }
+      result[key] = safelyToString(candidates);
+    }
   }
 
   return result;

@@ -32,6 +32,7 @@ describe('convByVar', () => {
       { locale: 'zh-tw', expected: 'tw' },
       { locale: 'en', expected: 'other' },
       { locale: 'fr', expected: 'other' },
+      { locale: null, expected: 'other' },
     ])('in $locale', ({ locale, expected }) => {
       getter.mockImplementation((val) => {
         if (val === 'wgUserVariant') {
@@ -59,6 +60,7 @@ describe('convByVar', () => {
       { locale: 'zh-tw', expected: '一天一蘋果，醫生遠離我。' },
       { locale: 'en', expected: '一天一苹果，医生远离我。' },
       { locale: 'fr', expected: '一天一苹果，医生远离我。' },
+      { locale: null, expected: '一天一苹果，医生远离我。' },
     ])('in $locale', ({ locale, expected }) => {
       getter.mockImplementation((val) => {
         if (val === 'wgUserVariant') {

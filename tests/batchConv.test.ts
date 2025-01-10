@@ -8,23 +8,6 @@ describe('batchConv', () => {
   });
 
   describe('works', () => {
-    const RAW_MSG = {
-      locale: {
-        zh: 'zh',
-        hans: 'hans',
-        hant: 'hant',
-        cn: 'cn',
-        tw: 'tw',
-        hk: 'hk',
-        mo: 'mo',
-        my: 'my',
-        sg: 'sg',
-        other: 'other',
-      },
-      'lovely-str': "I'm a lovely string",
-      SearchHint: { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
-    };
-
     test.each([
       { locale: 'zh', expected: { locale: 'zh', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' } },
       { locale: 'zh-hans', expected: { locale: 'hans', 'lovely-str': "I'm a lovely string", SearchHint: '搜索包含$1的页面' } },
@@ -40,7 +23,49 @@ describe('batchConv', () => {
     ])('in $locale', ({ locale, expected }) => {
       getter.mockReturnValue(locale);
 
-      expect(batchConv(RAW_MSG)).toStrictEqual(expected);
+      expect(batchConv({
+        locale: {
+          zh: 'zh',
+          hans: 'hans',
+          hant: 'hant',
+          cn: 'cn',
+          tw: 'tw',
+          hk: 'hk',
+          mo: 'mo',
+          my: 'my',
+          sg: 'sg',
+          other: 'other',
+        },
+        'lovely-str': "I'm a lovely string",
+        SearchHint: { hans: '搜索包含$1的页面', hant: '搜尋包含$1的頁面' },
+      })).toStrictEqual(expected);
+    });
+  });
+
+  describe('returns string when erroneous inputs are given', () => {
+    test.each([
+      { locale: 'zh', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-hans', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-hant', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-cn', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-sg', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-my', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-mo', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-hk', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'zh-tw', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'en', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: 'fr', expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+      { locale: null, expected: { notStr: '1', innerNotStr: '2', innerEmpty: '' } },
+    ])('in $locale', ({ locale, expected }) => {
+      getter.mockReturnValue(locale);
+
+      expect(batchConv({
+        /// @ts-expect-error For testing
+        notStr: 1,
+        /// @ts-expect-error For testing
+        innerNotStr: { zh: 2 },
+        innerEmpty: {},
+      })).toStrictEqual(expected);
     });
   });
 
