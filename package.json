@@ -1,11 +1,11 @@
 {
   "name": "hanassist",
-  "version": "4.4.2",
+  "version": "4.4.3",
   "description": "A MediaWiki gadget to ease Chinese variant handling in user scripts and gadgets.",
   "repository": "github:diskdance/HanAssist",
   "author": "diskdance",
   "license": "BSD-3-Clause",
-  "main":"./dist/Gadget-HanAssist.js",
+  "main": "./dist/Gadget-HanAssist.js",
   "typings": "./dist/lib/index.d.ts",
   "files": [
     "dist"
