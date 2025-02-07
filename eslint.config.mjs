@@ -8,10 +8,7 @@ export default tsEslint.config(
   eslint.configs.recommended,
   ...tsEslint.configs.recommendedTypeChecked,
   {
-    ignores: [
-      'dist/',
-      'assets/',
-    ],
+    ignores: ['dist/', 'assets/'],
   },
   {
     languageOptions: {
@@ -26,7 +23,7 @@ export default tsEslint.config(
     ...tsEslint.configs.disableTypeChecked,
   },
   {
-    files: ['scripts/*.js', '**/*.config.js'],
+    files: ['scripts/*.js', '**/*.config.mjs'],
     languageOptions: {
       globals: {
         ...globals.nodeBuiltin,
@@ -68,15 +65,9 @@ export default tsEslint.config(
         },
       ],
       'quote-props': ['error', 'as-needed'],
-      'no-empty': [
-        'error',
-        { allowEmptyCatch: true },
-      ],
+      'no-empty': ['error', { allowEmptyCatch: true }],
       eqeqeq: ['error', 'smart'],
-      '@typescript-eslint/no-explicit-any': [
-        'error',
-        { fixToUnknown: true, ignoreRestArgs: true },
-      ],
+      '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true, ignoreRestArgs: true }],
       'no-console': ['warn'],
     },
   },

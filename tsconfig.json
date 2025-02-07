@@ -18,7 +18,8 @@
   "include": [
     "lib/**/*.ts",
     "tests/**/*.ts",
-    "typings.d.ts"
+    "typings.d.ts",
+    "*.config.mjs",
   ],
   "exclude": []
 }

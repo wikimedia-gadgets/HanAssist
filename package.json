@@ -5,13 +5,8 @@
   "repository": "github:diskdance/HanAssist",
   "author": "diskdance",
   "license": "BSD-3-Clause",
-  "exports": {
-    ".": {
-      "require": "./dist/Gadget-HanAssist.js"
-    }
-  },
+  "main":"./dist/Gadget-HanAssist.js",
   "typings": "./dist/lib/index.d.ts",
-  "type": "module",
   "files": [
     "dist"
   ],
