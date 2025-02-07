@@ -15,7 +15,8 @@
     "build": "rollup -c",
     "build:compat": "COMPAT=1 rollup -c",
     "lint": "tsc --noEmit && eslint .",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
