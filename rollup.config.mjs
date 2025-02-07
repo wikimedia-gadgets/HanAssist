@@ -27,6 +27,7 @@ export default defineConfig({
         // MediaWiki >= 1.42.0-wmf.13 supports ES2016
         target: 'ES2016',
       },
+      declaration: true,
       include: ['lib/**/*.ts'],
     }),
     replace({

@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "declaration": true
+    "allowJs": true,
   },
   "include": [
     "lib/**/*.ts",
