@@ -20,6 +20,9 @@ declare module 'ext.gadget.HanAssist' {
    * @param locale locale, defaults to `wgUserLanguage`
    * @returns converted candidates dictionary
    */
+  export function batchConv<T extends string>(
+    candidatesDict: Record<T, string | Candidates>, locale?: string,
+  ): Record<T, string>;
   export function batchConv(
     candidatesDict: Record<string, string | Candidates>, locale?: string,
   ): Record<string, string>;
