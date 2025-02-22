@@ -139,6 +139,127 @@ describe('convByVar', () => {
     });
   });
 
+  describe('works when wgUserVariant is invalid', () => {
+    const CANDIDATES = {
+      zh: 'zh',
+      hans: 'hans',
+      hant: 'hant',
+      cn: 'cn',
+      tw: 'tw',
+      hk: 'hk',
+      mo: 'mo',
+      my: 'my',
+      sg: 'sg',
+      other: 'other',
+    };
+
+    test.each([
+      { locale: 'zh', expected: 'zh' },
+      { locale: 'zh-hans', expected: 'hans' },
+      { locale: 'zh-hant', expected: 'hant' },
+      { locale: 'zh-cn', expected: 'cn' },
+      { locale: 'zh-sg', expected: 'sg' },
+      { locale: 'zh-my', expected: 'my' },
+      { locale: 'zh-mo', expected: 'mo' },
+      { locale: 'zh-hk', expected: 'hk' },
+      { locale: 'zh-tw', expected: 'tw' },
+      { locale: 'en', expected: 'other' },
+      { locale: 'fr', expected: 'other' },
+    ])('in $locale', ({ locale, expected }) => {
+      getter.mockImplementation((val) => {
+        // mw.config.get('wgUserVariant')
+        if (val === 'wgUserVariant') {
+          return '__INVALID__';
+        }
+        // mw.user.options.get('variant')
+        if (val === 'variant') {
+          return locale;
+        }
+        return null;
+      });
+
+      expect(convByVar(CANDIDATES)).toBe(expected);
+    });
+  });
+
+  describe('works when url variant is a valid value', () => {
+    const CANDIDATES = {
+      zh: 'zh',
+      hans: 'hans',
+      hant: 'hant',
+      cn: 'cn',
+      tw: 'tw',
+      hk: 'hk',
+      mo: 'mo',
+      my: 'my',
+      sg: 'sg',
+      other: 'other',
+    };
+
+    test.each([
+      { locale: 'zh', expected: 'zh' },
+      { locale: 'zh-hans', expected: 'hans' },
+      { locale: 'zh-hant', expected: 'hant' },
+      { locale: 'zh-cn', expected: 'cn' },
+      { locale: 'zh-sg', expected: 'sg' },
+      { locale: 'zh-my', expected: 'my' },
+      { locale: 'zh-mo', expected: 'mo' },
+      { locale: 'zh-hk', expected: 'hk' },
+      { locale: 'zh-tw', expected: 'tw' },
+    ])('when value is $locale', ({ locale, expected }) => {
+      window.location.assign(`/?variant=${encodeURIComponent(locale)}`);
+
+      getter.mockImplementation((val) => {
+        // mw.user.options.get('variant')
+        if (val === 'variant') {
+          return '__INVALID__';
+        }
+        return null;
+      });
+
+      expect(convByVar(CANDIDATES)).toBe(expected);
+    });
+  });
+
+  describe('works when url variant is invalid', () => {
+    const CANDIDATES = {
+      zh: 'zh',
+      hans: 'hans',
+      hant: 'hant',
+      cn: 'cn',
+      tw: 'tw',
+      hk: 'hk',
+      mo: 'mo',
+      my: 'my',
+      sg: 'sg',
+      other: 'other',
+    };
+
+    test.each([
+      { locale: 'zh', expected: 'zh' },
+      { locale: 'zh-hans', expected: 'hans' },
+      { locale: 'zh-hant', expected: 'hant' },
+      { locale: 'zh-cn', expected: 'cn' },
+      { locale: 'zh-sg', expected: 'sg' },
+      { locale: 'zh-my', expected: 'my' },
+      { locale: 'zh-mo', expected: 'mo' },
+      { locale: 'zh-hk', expected: 'hk' },
+      { locale: 'zh-tw', expected: 'tw' },
+    ])('in $locale', ({ locale, expected }) => {
+      window.location.assign('/?variant=__INVALID__');
+
+      getter.mockImplementation((val) => {
+        // mw.user.options.get('variant')
+        if (val === 'variant') {
+          return locale;
+        }
+        return null;
+      });
+
+      expect(convByVar(CANDIDATES)).toBe(expected);
+    });
+  });
+
   describe('returns string when receiving malformed candidates', () => {
     const CANDIDATES = {
       zh: 123,

@@ -66,6 +66,22 @@ function conv(candidates: Candidates, locale = mw.config.get('wgUserLanguage')):
 }
 
 /**
+ * Finds the first value that belongs to a valid variant,
+ * or returns an empty string instead to fallback into the default fallback chain.
+ * 
+ * @param variants variants to check
+ * @returns valid variant or an empty string
+ */
+function findFirstValidVariant(...variants: (string|null|undefined)[]): string {
+  for (const variant of variants) {
+    if (variant && Object.prototype.hasOwnProperty.call(FALLBACK_LIST, variant)) {
+      return variant;
+    }
+  }
+  return '';
+}
+
+/**
  * Select between candidates based on user variant.
  * @param candidates an object of candidates
  * @returns selected value
@@ -73,12 +89,14 @@ function conv(candidates: Candidates, locale = mw.config.get('wgUserLanguage')):
 function convByVar(candidates: Candidates): string {
   return safeElect(
     candidates,
-    mw.config.get('wgUserVariant')
-    // Under certain circumstances, `wgUserVariant` is null but `?variant` URL param is recognized
-    // One example being documentations in Module namespace
-    // So specifying it as a fallback
-    ?? new URL(location.href).searchParams.get('variant')
-    ?? mw.user.options.get('variant') as string,
+    findFirstValidVariant(
+      mw.config.get('wgUserVariant'),
+      // Under certain circumstances, `wgUserVariant` is null but `?variant` URL param is recognized
+      // One example being documentations in Module namespace
+      // So specifying it as a fallback
+      new URL(location.href).searchParams.get('variant'),
+      mw.user.options.get('variant') as string,
+    ),
   );
 }
 
