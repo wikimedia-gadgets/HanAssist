@@ -73,7 +73,7 @@ function conv(candidates: Candidates, locale = mw.config.get('wgUserLanguage')):
  * @returns valid variant or an empty string
  */
 function findFirstValidVariant(...variants: (string|null|undefined)[]): string {
-  for (var variant of variants) {
+  for (const variant of variants) {
     if (variant && Object.prototype.hasOwnProperty.call(FALLBACK_LIST, variant)) {
       return variant;
     }
@@ -95,7 +95,7 @@ function convByVar(candidates: Candidates): string {
       // One example being documentations in Module namespace
       // So specifying it as a fallback
       new URL(location.href).searchParams.get('variant'),
-      mw.user.options.get('variant')
+      mw.user.options.get('variant') as string,
     ),
   );
 }
