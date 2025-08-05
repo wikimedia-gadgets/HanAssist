@@ -24,8 +24,8 @@ export default defineConfig({
     typescript({
       outputToFilesystem: true,
       compilerOptions: {
-        // MediaWiki >= 1.42.0-wmf.13 supports ES2016
-        target: 'ES2016',
+        // See https://www.mediawiki.org/wiki/Project:Tech_News#Tech_News:_2025-23, since 1.45.0-wmf.6
+        target: 'ES2017',
       },
       declaration: true,
       include: ['lib/**/*.ts'],
