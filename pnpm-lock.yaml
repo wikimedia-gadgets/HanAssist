@@ -36,6 +36,9 @@ importers:
       eslint:
         specifier: ^9.17.0
         version: 9.17.0
+      fast-glob:
+        specifier: ^3.3.3
+        version: 3.3.3
       globals:
         specifier: ^15.14.0
         version: 15.14.0

@@ -23,14 +23,6 @@ export default tsEslint.config(
     ...tsEslint.configs.disableTypeChecked,
   },
   {
-    files: ['scripts/*.js', '**/*.config.mjs'],
-    languageOptions: {
-      globals: {
-        ...globals.nodeBuiltin,
-      },
-    },
-  },
-  {
     rules: {
       semi: 'error',
       'comma-dangle': ['error', 'always-multiline'],
@@ -69,6 +61,17 @@ export default tsEslint.config(
       eqeqeq: ['error', 'smart'],
       '@typescript-eslint/no-explicit-any': ['error', { fixToUnknown: true, ignoreRestArgs: true }],
       'no-console': ['warn'],
+    },
+  },
+  {
+    files: ['scripts/*.js', '**/*.config.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.nodeBuiltin,
+      },
+    },
+    rules: {
+      'no-console': 'off',
     },
   },
 );
