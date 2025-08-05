@@ -32,6 +32,20 @@ function elect<T>(candidates: Partial<Record<CandidateKey, T>>, locale: string):
   return null;
 }
 
+function preprocessLocale(locale: unknown): string {
+  if (locale == null) {
+    mw.log.warn('[HanAssist] locale parameter is null-ish. Defaulting to wgUserLanguage.');
+    return mw.config.get('wgUserLanguage');
+  }
+
+  if (typeof locale !== 'string') {
+    mw.log.warn('[HanAssist] locale parameter must be a string. Please check your code.');
+    return safelyToString(locale);
+  }
+
+  return locale;
+}
+
 /**
  * A wrapper around `elect()` to ensure no non-string results are returned.
  */
@@ -40,10 +54,7 @@ function safeElect(candidates: Candidates, locale: string): string {
   if (!isPlainObject(candidates)) {
     throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');
   }
-  if (typeof locale !== 'string') {
-    mw.log.warn('[HanAssist] locale parameter must be a string. Please check your code.');
-    locale = safelyToString(locale);
-  }
+  locale = preprocessLocale(locale);
 
   const result = elect(candidates, locale) ?? '';
 
@@ -95,10 +106,7 @@ function batchConv(
   if (!isPlainObject(candidatesDict)) {
     throw new TypeError('[HanAssist] Invalid parameter. Must be an object.');
   }
-  if (typeof locale !== 'string') {
-    mw.log.warn('[HanAssist] locale parameter must be a string. Please check your code.');
-    locale = safelyToString(locale);
-  }
+  locale = preprocessLocale(locale);
 
   const result: Record<string, string> = {};
 

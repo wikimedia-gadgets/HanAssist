@@ -37,7 +37,7 @@ function generateUxsShim(configName: 'wgUserLanguage' | 'wgUserVariant') {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function deprecate(root: any, name: string, func: (...args: any[]) => any, replacement: string) {
-  mw.log.deprecate(root, name, func, `Use ${replacement} instead.`);
+  mw.log.deprecate(root, name, func, `Use ${replacement} instead. See [[Wikipedia:HanAssist]] for more information.`);
 }
 
 // Compatibility: redirect wgULS, wgUVS and wgUXS calls to HanAssist implementation
