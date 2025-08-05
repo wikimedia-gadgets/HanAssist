@@ -9,10 +9,10 @@ const FALLBACK_LIST: Record<string, CandidateKey[]> = {
   'zh-hant': ['hant', 'tw', 'hk', 'mo', 'zh', 'hans', 'cn', 'sg', 'my', 'other'],
   'zh-cn': ['cn', 'hans', 'sg', 'my', 'zh', 'hant', 'tw', 'hk', 'mo', 'other'],
   'zh-sg': ['sg', 'hans', 'cn', 'my', 'zh', 'hant', 'tw', 'hk', 'mo', 'other'],
-  'zh-my': ['my', 'hans', 'cn', 'sg', 'zh', 'hant', 'tw', 'hk', 'mo', 'other'],
+  'zh-my': ['my', 'sg', 'hans', 'cn', 'zh', 'hant', 'tw', 'hk', 'mo', 'other'],
   'zh-tw': ['tw', 'hant', 'hk', 'mo', 'zh', 'hans', 'cn', 'sg', 'my', 'other'],
   'zh-hk': ['hk', 'hant', 'mo', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'other'],
-  'zh-mo': ['mo', 'hant', 'hk', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'other'],
+  'zh-mo': ['mo', 'hk', 'hant', 'tw', 'zh', 'hans', 'cn', 'sg', 'my', 'other'],
 };
 
 const DEFAULT_FALLBACK = ['other', 'zh', 'hans', 'hant', 'cn', 'tw', 'hk', 'sg', 'mo', 'my'];
