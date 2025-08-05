@@ -1,6 +1,6 @@
 # HanAssist ![Lint](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/lint.yml/badge.svg) ![Test status](https://github.com/wikimedia-gadgets/HanAssist/actions/workflows/test.yml/badge.svg)
 
-HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。本程序提供了 `conv`、`convByVar` 和 `batchConv` 函数，目标是取代 `wgULS` 和 `wgUVS`。
+HanAssist 是帮助中文维基百科及其他 MediaWiki 网站上的用户脚本和小工具更优雅地处理中文变体消息的实用程序。本程序提供了 `conv`、`convByVar` 和 `batchConv` 函数，目标是取代 `wgULS` 和 `wgUVS`。本小工具支持的最低 MediaWiki 版本为 1.45.0-wmf.6。
 
 HanAssist is a helper gadget on Chinese Wikipedia to ease Chinese variant handling in user scripts and gadgets. It provides `conv`, `convByVar` and `batchConv` functions on the wiki.
 
